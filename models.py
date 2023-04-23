@@ -3,7 +3,7 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
@@ -20,7 +20,7 @@ class JlsAttractions(models.Model):
     att_status = models.CharField(max_length=20, db_comment='status can be closed, open, under mantainence')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_attractions'
 
 
@@ -34,7 +34,7 @@ class JlsCard(models.Model):
     crd_type = models.CharField(max_length=1, db_comment='Card type. C for credit, D for debit')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_card'
 
 
@@ -43,7 +43,7 @@ class JlsGroup(models.Model):
     group_size = models.IntegerField(db_comment='Group size. ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_group'
 
 
@@ -53,7 +53,7 @@ class JlsIndivi(models.Model):
     nationality = models.CharField(max_length=20, db_comment='Nationality of individual. ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_indivi'
 
 
@@ -65,7 +65,7 @@ class JlsInvoi(models.Model):
     invoi_type = models.CharField(max_length=20, db_comment='Invoice type. Type can be "Tickets, Shows, Stores, Parkings". ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_invoi'
 
 
@@ -76,7 +76,7 @@ class JlsMember(models.Model):
     mem_edate = models.DateTimeField(db_comment='Membership end date. ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_member'
 
 
@@ -90,7 +90,7 @@ class JlsOrder(models.Model):
     invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_order'
         unique_together = (('order_id', 'v'),)
 
@@ -105,7 +105,7 @@ class JlsParkings(models.Model):
     invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_parkings'
 
 
@@ -117,7 +117,7 @@ class JlsPay(models.Model):
     invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_pay'
 
 
@@ -127,7 +127,7 @@ class JlsSchool(models.Model):
     school_name = models.CharField(max_length=20, db_comment='School name. ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_school'
 
 
@@ -142,7 +142,7 @@ class JlsShows(models.Model):
     sh_price = models.DecimalField(max_digits=3, decimal_places=2, db_comment='Price for the show')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_shows'
 
 
@@ -153,7 +153,7 @@ class JlsStMenu(models.Model):
     it_uprice = models.SmallIntegerField(db_comment='Menu item unit price. ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_st_menu'
 
 
@@ -163,7 +163,7 @@ class JlsStores(models.Model):
     st_cat = models.CharField(max_length=15, db_comment='Store category. Category can be Food stall, Ice cream parlor, Restaurant, Gift Shop, Apparels ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_stores'
 
 
@@ -180,7 +180,7 @@ class JlsSummary(models.Model):
     pk_amount = models.IntegerField(db_comment='Parking amount. ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_summary'
         unique_together = (('v_id', 'v_date'),)
 
@@ -196,7 +196,7 @@ class JlsTickets(models.Model):
     invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_tickets'
 
 
@@ -205,7 +205,7 @@ class JlsTkAt(models.Model):
     att = models.ForeignKey(JlsAttractions, models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_tk_at'
 
 
@@ -224,7 +224,7 @@ class JlsVisitors(models.Model):
     v_type = models.CharField(max_length=12, db_comment='Visitor type, can be "Group, Individual, Member or School". ')
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_visitors'
 
 
@@ -234,5 +234,5 @@ class JlsVsi(models.Model):
     invoi = models.OneToOneField(JlsInvoi, models.DO_NOTHING, primary_key=True)
 
     class Meta:
-        managed = False
+        
         db_table = 'jls_vsi'

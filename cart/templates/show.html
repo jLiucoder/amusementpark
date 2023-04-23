@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Members</h1>
+  
+<ul>
+  {% for x in mycart %}
+    <li>{{ x.invoi_id }} {{ x.invoi_date }} {{ x.invoi_quant }} {{ x.invoi_amount }} {{ x.invoi_type }}</li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

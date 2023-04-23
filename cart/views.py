@@ -1,5 +1,11 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
+from .models import JlsInvoi
 
 def cart(request):
-    return HttpResponse('<h1>Hello World!</h1>')
+  mycart = JlsInvoi.objects.all().values()
+  template = loader.get_template('show.html')
+  context = {
+    'mycart': mycart,
+  }
+  return HttpResponse(template.render(context, request))
