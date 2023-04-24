@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TicketConfig(AppConfig):
+class VisitorConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'ticket'
+    name = 'visitor'
