@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 
-from visitor.forms import VisitorInfoForm, UserCreationMultiForm
+from visitor.forms import UserCreationMultiForm
 
 
 class SignupView(CreateView):

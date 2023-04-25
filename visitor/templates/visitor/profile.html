@@ -1,9 +1,17 @@
-<html>
-<h1> User Profile</h1>
+{% extends 'base.html' %}
 
-<ul>
-    {% for profile in profiles %}
-    <li>{{ profile.v_fname }}<li>
-    {% endfor %}
-</ul>
-</html>
+{% block content %}
+
+    <h1> {{ curr.username }}'s Profile</h1>
+
+    <h2> Name:{{ curruser.v_fname }} {{ curruser.v_lname }}</h2>
+
+    <h2> Email:{{ curruser.v_email }}</h2>
+
+    <h2> State:{{ curruser.v_state }}</h2>
+
+    <h2> Phone#:{{ curruser.v_phone}}</h2>
+
+
+
+{% endblock %}
