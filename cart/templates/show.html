@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+
+{% block content %}
+
 <body>
 
 <h1>Cart</h1>
-  
+
 <ul>
+{#go through the cart#}
   {% for x in mycart %}
     <li>{{ x.invoi_id }} {{ x.invoi_date }} {{ x.invoi_quant }} {{ x.invoi_amount }} {{ x.invoi_type }}</li>
+
+{#      if nothing, then display nothing found#}
+  {% empty %}
+      <h2>Nothing found </h2>
   {% endfor %}
 </ul>
 
 </body>
-</html>
+
+{% endblock %}

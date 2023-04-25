@@ -6,14 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 
-# class VisitorView(TemplateView):
-#     # tempUser = User.objects.get(User.get)
-#     # user = JlsVisitors.objects.get(user_id=)
-#     # Post.objects.filter(status=True).select_related('author')
-#     template_name = 'visitor/profile.html'
-#     extra_context = {'profile': User}
-#
-
 class VisitorView(LoginRequiredMixin, TemplateView):
     template_name = 'visitor/profile.html'
     # extra_context = {'profile': self.get_context_date()}
