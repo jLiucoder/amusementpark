@@ -12,8 +12,11 @@
         <p>Year long membership cost only $99 starting from today</p>
         <form method="post">
             {% csrf_token %}
-
+            {% if curruser.v_type != 'M' %}
             <input class="btn btn-secondary" type = 'submit' name = 'Submit' value='Join now'>
+            {% else %}
+            <p>you are already a member</p>
+            {% endif %}
         </form>
     </div>
 

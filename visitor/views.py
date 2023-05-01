@@ -21,24 +21,30 @@ class VisitorView(LoginRequiredMixin, TemplateView):
             curruser = JlsVisitors.objects.filter(user_id=current_user_id).first()
             context['curr'] = self.request.user
             context['curruser'] = curruser
+
+            if curruser.v_type == 'M':
+                member = JlsMember.objects.get(v=curruser)
+                context['member'] = member
+
         return context
 
 
 class MemberView(LoginRequiredMixin, TemplateView):
     template_name = 'visitor/membership.html'
 
-    # if already have the membership, then skip to homepage
-    def get(self, request, *args, **kwargs):
-        visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
-        if JlsMember.objects.get(v=visitor):
-            return redirect('home')
-        return super().get(request, *args, **kwargs)
-
+    # # if already have the membership, then skip to homepage
+    # def get(self, request, *args, **kwargs):
+    #     visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
+    #     if visitor.v_type == 'M':
+    #         return redirect('home')
+    #     else:
+    #         pass
+    #     return super().get(request, *args, **kwargs)
 
     def post(self, request, **kwargs):
         current_user_id = self.request.user.id
         visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
-
+        visitor.v_type = 'M'
         mem_id = randint(10000, 99999)
         mem_sdate = date.today()
         mem_edate = mem_sdate + timedelta(days=365)
@@ -48,5 +54,14 @@ class MemberView(LoginRequiredMixin, TemplateView):
             mem_sdate=mem_sdate,
             mem_edate=mem_edate,
         )
+        visitor.save()
         member.save()
         return redirect('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            curruser = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
+            context['curruser'] = curruser
+
+        return context

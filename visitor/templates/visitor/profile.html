@@ -14,5 +14,12 @@
 
     <h2> Date of Birth:{{ curruser.v_dob}}</h2>
 
+    {% if curruser.v_type == 'M' %}
+    <h2> Membership ID: {{ member.mem_id }}</h2>
+
+    <h2> Membership Starting date: {{ member.mem_sdate }}</h2>
+
+    <h2> Membership Ending date: {{ member.mem_edate }}</h2>
+    {% endif %}
 
 {% endblock %}

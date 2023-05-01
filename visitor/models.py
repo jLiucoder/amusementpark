@@ -15,7 +15,7 @@ class JlsVisitors(models.Model):
     v_email = models.CharField('Email', max_length=30, db_comment="Visitor's Email")
     v_phone = models.CharField('Phone', max_length=10, db_comment="Visitor's phone number")
     v_dob = models.DateField('Birthday', db_comment='date of birth of the visitor')
-    # v_type = models.CharField(max_length=12, db_comment='Visitor type, can be "Group, Individual, Member or School". ')
+    v_type = models.CharField(max_length=12, default='I', db_comment='Visitor type, can be "Group, Individual, Member')
 
     class Meta:
         # managed = False
@@ -29,5 +29,4 @@ class JlsMember(models.Model):
     mem_edate = models.DateField(db_comment='Membership end date. ')
 
     class Meta:
-
         db_table = 'jls_member'
