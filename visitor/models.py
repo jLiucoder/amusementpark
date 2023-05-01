@@ -22,12 +22,12 @@ class JlsVisitors(models.Model):
         db_table = 'jls_visitors'
 
 
-# class JlsMember(models.Model):
-#     v = models.OneToOneField('JlsVisitors', models.DO_NOTHING, primary_key=True, db_comment='Unique Visitor ID')
-#     mem_id = models.IntegerField(db_comment='Membership ID.')
-#     mem_sdate = models.DateTimeField(db_comment='Membership start date. ')
-#     mem_edate = models.DateTimeField(db_comment='Membership end date. ')
-#
-#     class Meta:
-#
-#         db_table = 'jls_member'
+class JlsMember(models.Model):
+    v = models.OneToOneField('JlsVisitors', models.DO_NOTHING, primary_key=True, db_comment='Unique Visitor ID')
+    mem_id = models.IntegerField(db_comment='Membership ID.')
+    mem_sdate = models.DateField(db_comment='Membership start date. ')
+    mem_edate = models.DateField(db_comment='Membership end date. ')
+
+    class Meta:
+
+        db_table = 'jls_member'
