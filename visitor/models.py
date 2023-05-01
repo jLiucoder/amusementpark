@@ -14,10 +14,20 @@ class JlsVisitors(models.Model):
     v_zip = models.CharField('ZIP', max_length=5, db_comment="Visitor's zipcode. ")
     v_email = models.CharField('Email', max_length=30, db_comment="Visitor's Email")
     v_phone = models.CharField('Phone', max_length=10, db_comment="Visitor's phone number")
-
-    # v_dob = models.DateTimeField(db_comment='date of birth of the visitor')
+    v_dob = models.DateField('Birthday', db_comment='date of birth of the visitor')
     # v_type = models.CharField(max_length=12, db_comment='Visitor type, can be "Group, Individual, Member or School". ')
 
     class Meta:
         # managed = False
         db_table = 'jls_visitors'
+
+
+# class JlsMember(models.Model):
+#     v = models.OneToOneField('JlsVisitors', models.DO_NOTHING, primary_key=True, db_comment='Unique Visitor ID')
+#     mem_id = models.IntegerField(db_comment='Membership ID.')
+#     mem_sdate = models.DateTimeField(db_comment='Membership start date. ')
+#     mem_edate = models.DateTimeField(db_comment='Membership end date. ')
+#
+#     class Meta:
+#
+#         db_table = 'jls_member'
