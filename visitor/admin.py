@@ -5,3 +5,4 @@ from . import models
 
 
 admin.site.register(models.JlsVisitors)
+admin.site.register(models.JlsMember)

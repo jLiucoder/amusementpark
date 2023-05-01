@@ -27,6 +27,14 @@ class VisitorView(LoginRequiredMixin, TemplateView):
 class MemberView(LoginRequiredMixin, TemplateView):
     template_name = 'visitor/membership.html'
 
+    # if already have the membership, then skip to homepage
+    def get(self, request, *args, **kwargs):
+        visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
+        if JlsMember.objects.get(v=visitor):
+            return redirect('home')
+        return super().get(request, *args, **kwargs)
+
+
     def post(self, request, **kwargs):
         current_user_id = self.request.user.id
         visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
