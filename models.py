@@ -83,7 +83,7 @@ from django.db import models
 #     class Meta:
 #
 #         db_table = 'jls_member'
-#
+
 #
 # class JlsOrder(models.Model):
 #     order_id = models.BigIntegerField(primary_key=True, db_comment='Order ID for store items. ')  # The composite primary key (order_id, v_id) found, that is not supported. The first column is selected.

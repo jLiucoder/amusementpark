@@ -15,8 +15,8 @@ class VisitorInfoForm(forms.ModelForm):
     class Meta:
         model = JlsVisitors
         fields = (
-            'v_fname', 'v_lname', 'v_state', 'v_city', 'v_staddr', 'v_zip', 'v_email', 'v_phone',)
-        # 'v_dob', 'v_type',
+            'v_fname', 'v_lname', 'v_state', 'v_city', 'v_staddr', 'v_zip', 'v_email', 'v_phone', 'v_dob',)
+        #  'v_type',
         widgets = {
             'v_dob': forms.widgets.DateInput(attrs={'type': 'date'})
         }
