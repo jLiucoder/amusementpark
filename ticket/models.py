@@ -12,7 +12,7 @@ class JlsTickets(models.Model):
     tk_price = models.SmallIntegerField(db_comment='Ticket Price of the ticket')
     tk_discount = models.IntegerField(db_comment='Percentage off of the ticket')
     v = models.ForeignKey(JlsVisitors, models.DO_NOTHING)
-    invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
+    invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING, null=True)
 
     class Meta:
 

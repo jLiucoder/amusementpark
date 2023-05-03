@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class JlsVisitors(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     v_id = models.AutoField(primary_key=True, db_comment='Unique Visitor ID')
     v_fname = models.CharField('Firstname', max_length=10, db_comment="Visitor's firstname")
     v_lname = models.CharField('Lastname', max_length=10, db_comment="Visitor's lastname")
