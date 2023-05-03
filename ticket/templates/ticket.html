@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<body>
+
+<h1>Standard</h1>
+<p>Starting at $60.00</p>
+<p>Price above includes</p>
+<p>Ticket: $50.00</p>
+<p>Fee: $10.00</p>
+<p>#No addtional fees for all attractions in the park.</p>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit"> Add Ticket </button>
+</form>
+{% include 'messages.html' %}
+
+</body>
+
+{% endblock %}
