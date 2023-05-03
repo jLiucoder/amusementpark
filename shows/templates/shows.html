@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+<html>
+
+<head>
+    <style>
+        .h1{
+            padding-bottom: 80px;
+            font-size: x-large;
+            color:lightgrey;
+        }
+        .col{
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+    </style>
+
+    <h1>Check out our finest Shows!</h1>
+</head>
+
+{#body#}
+<body>
+{#<div class="shows">#}
+{#    <ul>#}
+{#  {% for x in myShows %}#}
+{#    <li> {{ x.sh_name }} {{ x.sh_type }} {{ x.sh_des }} </li>#}
+{##}
+{#  {% endfor %}#}
+{#    </ul>#}
+
+<div class="container">
+<div class="row">
+    {% for x in myShows %}
+    <div class="col">
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src={{ x.sh_link }} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ x.sh_name }}</h5>
+                <p class="card-text">{{ x.sh_des }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Show type: {{ x.sh_type }} </li>
+                <li class="list-group-item">Show start date: {{ x.sh_stime }}</li>
+                <li class="list-group-item">Show end date: {{ x.sh_etime }}</li>
+                <li class="list-group-item">Show price: {{ x.sh_price }}</li>
+                <li class="list-group-item">Wheelchair Access: {{ x.sh_wcacc }}</li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+</body>
+
+</html>
+
+
+
+
+{% endblock %}

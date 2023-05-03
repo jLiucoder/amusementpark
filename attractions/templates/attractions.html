@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<html>
+<head>
+    <style>
+        .h1{
+            padding-bottom: 80px;
+            border-bottom: 50px;
+            font-size: x-large;
+            color:lightgrey;
+        }
+        .col{
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+    </style>
+
+    <h1>Take a look at our exciting attractions!</h1>
+</head>
+
+<body>
+
+<div class="container">
+<div class="row">
+    {% for x in myAttractions %}
+    <div class="col">
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src={{ x.att_link }} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ x.att_name }}</h5>
+                <p class="card-text">{{ x.att_desrip }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Attraction type: {{ x.att_type }} </li>
+                <li class="list-group-item">Attraction capacity: {{ x.att_capacity }}</li>
+                <li class="list-group-item">Attraction minimum height: {{ x.att_minhei }}</li>
+                <li class="list-group-item">Attraction duration: {{ x.att_duration }}</li>
+                <li class="list-group-item">Attraction loc section: {{ x.att_locsec }}</li>
+                <li class="list-group-item">Attraction status: {{ x.att_status }}</li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+
+</body>
+
+</html>
+
+
+
+{% endblock %}

@@ -7,8 +7,9 @@ from django.shortcuts import redirect, reverse
 
 @login_required(login_url='home')
 def cart(request):
+    # getting all the value of cart
     mycart = JlsInvoi.objects.all().values()
-    template = loader.get_template('show.html')
+    template = loader.get_template('cart.html')
     context = {
         'mycart': mycart,
     }

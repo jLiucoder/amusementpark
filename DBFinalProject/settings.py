@@ -36,8 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Added
     'home',
     'visitor',
+    'attractions',
+    'shows',
+    'stores',
     'cart',
     'payment',
     'ticket',
