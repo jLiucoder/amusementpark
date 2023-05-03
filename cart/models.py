@@ -97,8 +97,6 @@ class JlsInvoi(models.Model):
 #         db_table = 'jls_order'
 #         unique_together = (('order_id', 'v'),)
 #
-#
-# class JlsParkings(models.Model):
 #     pk_id = models.IntegerField(primary_key=True, db_comment='Unique parking ID')
 #     pk_lot = models.CharField(max_length=1, db_comment='Lot identifier')
 #     pk_timein = models.DateTimeField(db_comment='Time into the lot of the current viehicle')
@@ -123,16 +121,7 @@ class JlsInvoi(models.Model):
 #
 #         db_table = 'jls_pay'
 #
-#
-# class JlsSchool(models.Model):
-#     v = models.OneToOneField('JlsVisitors', models.DO_NOTHING, primary_key=True, db_comment='Unique Visitor ID')
-#     school_id = models.IntegerField(db_comment='School ID.')
-#     school_name = models.CharField(max_length=20, db_comment='School name. ')
-#
-#     class Meta:
-#
-#         db_table = 'jls_school'
-#
+
 #
 # class JlsShows(models.Model):
 #     sh_id = models.SmallIntegerField(primary_key=True, db_comment='Unique show ID')

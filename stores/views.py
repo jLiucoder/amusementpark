@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
-from .models import JlsInvoi
+from .models import JlsStores
 
 
 @login_required(login_url='home')
-def cart(request):
+def stores(request):
     # getting all the value of cart
-    mycart = JlsInvoi.objects.all().values()
-    template = loader.get_template('cart.html')
+    myStores = JlsStores.objects.all().values()
+    template = loader.get_template('stores.html')
     context = {
-        'mycart': mycart,
+        'myStores': myStores,
     }
     return HttpResponse(template.render(context, request))
