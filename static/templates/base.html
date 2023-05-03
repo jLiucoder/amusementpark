@@ -15,10 +15,13 @@
 {#        if authenticated, show all the elements, else show login and signup#}
         {% if user.is_authenticated %}
             <a class="btn btn-outline-light me-1" href={% url 'home' %}>HomePage</a>
-            <a class="btn btn-outline-light me-1" href="#">Tickets</a>
+{#            <a class="btn btn-outline-light me-1" href="#">Tickets</a>#}
             <a class="btn btn-outline-light me-1" href={% url 'attractions' %}>Attractions</a>
             <a class="btn btn-outline-light me-1" href={% url 'shows' %}>Shows</a>
             <a class="btn btn-outline-light me-1" href={% url 'stores' %}>Stores</a>
+            <a class="btn btn-outline-light me-1" href={% url 'ticket' %}>Tickets</a>
+            <a class="btn btn-outline-light me-1" href="#">Attractions</a>
+            <a class="btn btn-outline-light me-1" href="#">Shows</a>
             <a class="btn btn-outline-light me-1" href="#">Parking</a>
             <a class="btn btn-outline-light me-1" href={% url 'profiles' %}>Profile</a>
             <a class="btn btn-outline-light me-1" href={% url 'cart' %}>Cart</a>
@@ -32,7 +35,6 @@
 
 <div class="my-5 text-center container">
     {% block content %}
-
     {% endblock %}
 </div>
 

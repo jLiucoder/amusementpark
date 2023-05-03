@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <body>
+
+    <h1>Getting a Membership!</h1>
+    <h2>Getting a membership has many benefits, be the first ones to get it with mystery gifts!</h2>
+
+    <div>
+        {#        insert links here for membership page and group page#}
+        <p>Year long membership cost only $99 starting from today</p>
+        <form method="post">
+            {% csrf_token %}
+            {% if curruser.v_type != 'M' %}
+            <input class="btn btn-secondary" type = 'submit' name = 'Submit' value='Join now'>
+            {% else %}
+            <p>you are already a member</p>
+            <a href="{% url 'deactivate_memberships' %}" class="btn btn-primary">Deactivate</a>
+            {% endif %}
+        </form>
+
+    </div>
+
+
+    </body>
+
+{% endblock %}

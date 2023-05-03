@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <body>
+
+    <h1>Here with a group!</h1>
+    <h2>Enjoy the fun with your family and friends!</h2>
+
+    <div>
+        {#        insert links here for membership page and group page#}
+        <p>Add a person here</p>
+        <p>You have {{ group }} person in your group</p>
+        <form method="post" id="create">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-secondary" type='submit' name='Submit' value='Add'>
+
+        </form>
+
+
+        <a href="{% url 'delete_group' %}" class="btn btn-primary">Delete</a>
+
+    </div>
+
+
+    </body>
+
+{% endblock %}

@@ -10,9 +10,19 @@
         <h2>Signup or signin to continue</h2>
     {% else %}
     <h1>welcome to the park! {{ user }}!</h1>
+
+     <div>
+{#        insert links here for membership page and group page#}
+        <a href="{% url 'memberships' %}" class="btn btn-primary">Membership</a>
+        <a href="{% url 'groups' %}" class="btn btn-primary">Here with a group?</a>
+    </div>
+
+
     {% endif %}
     <p>today is {{ today }}</p>
-    <a href="" class="btn btn-primary">here</a>
+
+
+
 
 </body>
 
