@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Deactivate your membership?</h1>
+<p>You are missing out, we will miss you</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="Deactivate">
+</form>
+{% endblock %}

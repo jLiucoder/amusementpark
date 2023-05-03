@@ -16,6 +16,7 @@ class JlsVisitors(models.Model):
     v_phone = models.CharField('Phone', max_length=10, db_comment="Visitor's phone number")
     v_dob = models.DateField('Birthday', db_comment='date of birth of the visitor')
     v_type = models.CharField(max_length=12, default='I', db_comment='Visitor type, can be "Group, Individual, Member')
+    v_group = models.CharField(max_length=1, default='N', db_comment='if user is in a group')
 
     class Meta:
         # managed = False
@@ -30,3 +31,12 @@ class JlsMember(models.Model):
 
     class Meta:
         db_table = 'jls_member'
+
+
+class JlsGroup(models.Model):
+    v = models.OneToOneField('JlsVisitors', models.DO_NOTHING, primary_key=True, db_comment='Unique Visitor ID')
+    group_size = models.IntegerField(default=0, db_comment='Group size. ')
+
+    class Meta:
+
+        db_table = 'jls_group'

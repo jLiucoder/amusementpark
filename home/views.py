@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView
 from django.shortcuts import redirect
 
 from visitor.forms import UserCreationMultiForm
+from visitor.models import JlsGroup
 
 
 class SignupView(CreateView):
@@ -32,6 +33,7 @@ class SignupView(CreateView):
         profile = form['visitorInfo'].save(commit=False)
         profile.user = user
         profile.save()
+
         return redirect('home')
 
 

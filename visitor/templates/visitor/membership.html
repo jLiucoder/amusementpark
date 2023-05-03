@@ -16,8 +16,10 @@
             <input class="btn btn-secondary" type = 'submit' name = 'Submit' value='Join now'>
             {% else %}
             <p>you are already a member</p>
+            <a href="{% url 'deactivate_memberships' %}" class="btn btn-primary">Deactivate</a>
             {% endif %}
         </form>
+
     </div>
 
 
