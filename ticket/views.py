@@ -1,48 +1,59 @@
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.template import loader
 from .models import JlsTickets
-from django.shortcuts import redirect, reverse
-from datetime import datetime
+from visitor.models import JlsVisitors
+from django.shortcuts import render
+from datetime import datetime, date
 from django.contrib import messages
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+import holidays
 
 
-@login_required(login_url='home')
-def ticket(request):
-    ticket = JlsTickets.objects.all().values()
-    template = loader.get_template('ticket.html')
-    context = {
-        'ticket': ticket,
-    }
-    if request.method == 'POST':
+class TicketView(LoginRequiredMixin, View):
+    template_name = 'ticket.html'
 
-        new_tk = JlsTickets()
-        new_tk.tk_id = 1 # should be incremented
-        new_tk.tk_method = 'OL'
-        new_tk.tk_purdate = datetime.today()
-        new_tk.tk_vdate = datetime.today()
-        new_tk.tk_price = 60
-        new_tk.tk_discount = 0
-        print(new_tk.tk_id)
-        print(new_tk.tk_method)
-        print(new_tk.tk_purdate)
-        print()
-        new_tk.save()
-        messages.success(request, 'Successfully added')
-    return HttpResponse(template.render(context, request))
+    def calculateAge(self, birthDate):
+        today = date.today()
+        age = today.year - birthDate.year -((today.month, today.day) <(birthDate.month, birthDate.day))
+        return age
+    
+    def calculateDiscount(self, method, vdate, visitor):
+        discount = 0
+        age = self.calculateAge(visitor.v_dob)
+        print(age)
+        us_holidays = holidays.US()
+        if vdate in us_holidays:
+            discount = 0
+        else:
+            if method == 'OL':
+                discount += 0.05
+            if visitor.v_type == 'M':
+                discount += 0.1
+            if age >= 60 or age < 7:
+                discount += 0.15
+        return discount
 
-# def add(request):
-#     if request.method == 'POST':
+    def get(self, request):
+        return render(request, self.template_name)
 
-#         new_tk = JlsTickets()
-#         new_tk.tk_method = 'OL'
-#         new_tk.tk_purdate = timezone.now
-#         new_tk.tk_price = 60
-#         new_tk.save()
+    def post(self, request, **kwargs):
+        current_user_id = self.request.user.id
+        vdate = request.POST.get('visit date')
+        if vdate == "":
+            messages.success(request, "Please select a date to visit")
+        else:
+            tk = JlsTickets.objects.filter(v_id=current_user_id, tk_vdate=vdate)
+            if len(tk) != 0:
+                messages.success(request, "You've already bought a ticket!")
+            else: 
+                visitor = JlsVisitors.objects.get(user_id=current_user_id)
 
-#         # request.JlsTickets.tk_method.add('OL')
-#         # request.JlsTickets.tk_purdate.add(timezone.now)
-#         # request.JlsTickets.tk_vdate.add('OL')
-#         # request.JlsTickets.tk_price.add(60)
-#         messages.success(request, 'Successfully added')
-#         return redirect('home/ticket')
+                new_tk = JlsTickets()
+                new_tk.v_id = current_user_id
+                new_tk.tk_method = 'OL'
+                new_tk.tk_purdate = datetime.today()
+                new_tk.tk_vdate = vdate
+                new_tk.tk_price = 60
+                new_tk.tk_discount = self.calculateDiscount(new_tk.tk_method, vdate, visitor)
+                new_tk.save()
+                messages.success(request, 'Successfully added')
+        return render(request, self.template_name)
