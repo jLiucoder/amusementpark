@@ -11,7 +11,7 @@ class JlsShows(models.Model):
     sh_stime = models.DateTimeField(db_comment='Starting time of the show')
     sh_etime = models.DateTimeField(db_comment='Ending time of the show')
     sh_wcacc = models.CharField(max_length=1, db_comment='If the show is wheelchair accessible')
-    sh_price = models.DecimalField(max_digits=3, decimal_places=2, db_comment='Price for the show')
+    sh_price = models.DecimalField(max_digits=5, decimal_places=2, db_comment='Price for the show')
     # Added
     sh_link = models.CharField(max_length=200, default="baidu.com", db_comment='link for the image')
 

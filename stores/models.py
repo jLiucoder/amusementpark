@@ -26,6 +26,7 @@ class JlsItems(models.Model):
     st = models.ForeignKey(JlsStores, models.DO_NOTHING, null=True)
     class Meta:
         # constraints
+        managed = True
         db_table = 'jls_items'
 
 
