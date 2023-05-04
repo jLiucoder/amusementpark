@@ -3,6 +3,8 @@ from random import randint
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
+
+from cart.models import JlsInvoi
 from .models import JlsVisitors, JlsMember, JlsGroup
 from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -31,10 +33,12 @@ class MemberViewCreate(LoginRequiredMixin, TemplateView):
     template_name = 'visitor/membership.html'
 
     def post(self, request, **kwargs):
+        # change the visitor type to member
         current_user_id = self.request.user.id
         visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
         visitor.v_type = 'M'
         visitor.save()
+        # generate new member id and startdate, enddate and create new record in teh memebr table
         mem_id = randint(10000, 99999)
         mem_sdate = date.today()
         mem_edate = mem_sdate + timedelta(days=365)
@@ -74,6 +78,7 @@ class MemberViewDelete(LoginRequiredMixin, View):
         visitor.refresh_from_db()
         return redirect(self.success_url)
 
+
 class GroupViewCreate(LoginRequiredMixin, CreateView):
     template_name = 'visitor/group.html'
     form_class = VisitorInfoForm
@@ -109,7 +114,7 @@ class GroupViewCreate(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
-            JlsGroup.objects.count()
+            # JlsGroup.objects.count()
             # if JlsGroup.objects.count() != 0:
             context["group"] = JlsGroup.objects.count()
             # else:

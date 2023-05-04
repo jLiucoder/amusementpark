@@ -8,13 +8,16 @@
 
 <ul>
 {#go through the cart#}
-  {% for x in mycart %}
-    <li>{{ x.invoi_id }} {{ x.invoi_date }} {{ x.invoi_amount }} {{ x.invoi_type }}</li>
-
-{#      if nothing, then display nothing found#}
-  {% empty %}
-      <h2>Nothing found </h2>
+{% if parking_count  != 0%}
+    <h3>Parking</h3>
+  {% for x in myparking %}
+    <li>Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount:{{ x.pk_fee }} </li>
   {% endfor %}
+{% endif %}
+{#      if nothing, then display nothing found#}
+
+{#      <h2>Nothing found </h2>#}
+
 </ul>
 
 <a href="{% url 'pay' %}"><button type="button"> payment </button></a>

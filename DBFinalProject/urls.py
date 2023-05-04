@@ -28,4 +28,5 @@ urlpatterns = [
     path('', include('stores.urls')),
     # path('', include('visitor.urls')),
     path('', include('payment.urls')),
+    path('', include('parking.urls'))
 ]

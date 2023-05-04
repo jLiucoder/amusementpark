@@ -2,6 +2,7 @@ asgiref==3.6.0
 Django==4.2
 django-betterforms==2.0.0
 django-bootstrap-datepicker-plus==5.0.3
+django-timedeltafield==0.7.10
 mysqlclient==2.1.1
 pydantic==1.10.7
 PyMySQL==1.0.3

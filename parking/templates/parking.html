@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <body>
+
+    <h1>Reserve parking spots!</h1>
+    <h2>Hourly rate: $18</h2>
+
+    <div>
+        <p>Add a spot here</p>
+        <p>You reserved {{ parkingCount }} parking spots</p>
+        <form method="post" id="create">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-secondary" type='submit' name='Submit' value='Add'>
+
+        </form>
+
+        <a href="{% url 'delete_parking' %}" class="btn btn-primary">Delete</a>
+
+    </div>
+
+
+    </body>
+
+{% endblock %}

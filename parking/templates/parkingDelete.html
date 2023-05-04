@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Removing all parking</h1>
+<p>Are you sure you want to delete all parking spots you selected?</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="Delete all">
+</form>
+{% endblock %}
