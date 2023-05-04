@@ -33,19 +33,17 @@
             <div class="card-body">
                 <h5 class="card-title">{{ x.att_name }}</h5>
                 <p class="card-text">{{ x.att_desrip }}</p>
+                <p class="card-text">Type: {{ x.att_type }}</p>
+                <p class="card-text">Capacity: {{ x.att_capacity }}</p>
+                <p class="card-text">Minimum height: {{ x.att_minhei }}</p>
+                <p class="card-text">Duration: {{ x.att_duration }}</p>
+                <p class="card-text">Loc section: {{ x.att_locsec }}</p>
+
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Attraction type: {{ x.att_type }} </li>
-                <li class="list-group-item">Attraction capacity: {{ x.att_capacity }}</li>
-                <li class="list-group-item">Attraction minimum height: {{ x.att_minhei }}</li>
-                <li class="list-group-item">Attraction duration: {{ x.att_duration }}</li>
-                <li class="list-group-item">Attraction loc section: {{ x.att_locsec }}</li>
                 <li class="list-group-item">Attraction status: {{ x.att_status }}</li>
             </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
+
         </div>
     </div>
     {% endfor %}

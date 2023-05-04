@@ -2,6 +2,7 @@ from django.db import models
 from cart.models import JlsInvoi
 from visitor.models import JlsVisitors
 
+
 # Create your models here.
 
 class JlsTickets(models.Model):
@@ -12,8 +13,7 @@ class JlsTickets(models.Model):
     tk_price = models.SmallIntegerField(db_comment='Ticket Price of the ticket')
     tk_discount = models.IntegerField(db_comment='Percentage off of the ticket')
     v = models.ForeignKey(JlsVisitors, models.DO_NOTHING)
-    invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
+    invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING, null=True)
 
     class Meta:
-
         db_table = 'jls_tickets'
