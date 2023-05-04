@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 
-from parking.models import JlsParkings
 from visitor.models import JlsVisitors
+from ticket.models import JlsTickets
+from parking.models import JlsParkings
 from .models import JlsInvoi
 from django.shortcuts import redirect, reverse
 
