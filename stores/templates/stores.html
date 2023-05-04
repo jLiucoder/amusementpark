@@ -5,10 +5,50 @@
 <head>
     <h1>Shop in any stores that you like! </h1>
 
+    <style>
+        .h1{
+            padding-bottom: 80px;
+            border-bottom: 50px;
+            font-size: x-large;
+            color:lightgrey;
+        }
+        .col{
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+        .card-img-top{
+            width: 480px;
+            height: 300px;
+        }
+    </style>
+
 </head>
 
 <body>
 
+<div class="container">
+<div class="row">
+    {% for store in stores %}
+    <div class="col">
+        <div class="card" style="width: 30rem;">
+            <img class="card-img-top" src={{ store.st_link }} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ store.st_name }}</h5>
+                <p class="card-text">Store Category: {{ store.st_cat }}</p>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'store_items' store.st_id %}" method="GET" style="display:inline;">
+                    <button type="submit">Go to store</button>
+                </form>
+                {# <a href="{% url 'store_items' store.st_id %}"><button>Go to Store</button></a>#}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
 
 </body>
 

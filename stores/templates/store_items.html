@@ -1,0 +1,54 @@
+<! -- store_items.html -->
+
+{% extends "base.html" %}
+{% block content %}
+<html>
+<head>
+    <h1>Welcome to {{ store.st_name }}</h1>
+
+    <style>
+        .h1{
+            padding-bottom: 80px;
+            border-bottom: 50px;
+            font-size: x-large;
+            color:lightgrey;
+        }
+        .col{
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="row">
+    {% for x in items %}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+
+                <img class="card-img-top" src={{ x.it_link }} alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ x.it_name }}</h5>
+                    <p class="card-text">{{ x.it_des }}</p>
+                    <p class="card-text">Price: {{ x.it_uprice }}</p>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+
+
+</div>
+</div>
+
+</body>
+</html>
+
+
+{% endblock %}

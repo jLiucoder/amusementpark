@@ -41,13 +41,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{ x.sh_name }}</h5>
                 <p class="card-text">{{ x.sh_des }}</p>
+                <p class="card-text">Type: {{ x.sh_type }}</p>
+                <p class="card-text">Start date: {{ x.sh_stime }}</p>
+                <p class="card-text">End date: {{ x.sh_etime }}</p>
+                <p class="card-text">Wheelchair Access: {{ x.sh_wcacc }}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Show type: {{ x.sh_type }} </li>
-                <li class="list-group-item">Show start date: {{ x.sh_stime }}</li>
-                <li class="list-group-item">Show end date: {{ x.sh_etime }}</li>
                 <li class="list-group-item">Show price: {{ x.sh_price }}</li>
-                <li class="list-group-item">Wheelchair Access: {{ x.sh_wcacc }}</li>
             </ul>
             <div class="card-body">
                 <a href="#" class="card-link">Card link</a>
