@@ -14,7 +14,7 @@ class JlsParkings(models.Model):
     pk_timeout = models.DateTimeField('To', db_comment='Time get out of the current vehicle')
     pk_fee = models.IntegerField(db_comment='Parking fee during the parked time', null=True)
     v = models.ForeignKey(JlsVisitors, models.DO_NOTHING)
-    invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING, null=True)
+    invoi = models.ForeignKey(JlsInvoi, on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table = 'jls_parkings'

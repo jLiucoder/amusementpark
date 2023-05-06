@@ -31,7 +31,7 @@ class ParkingViewCreate(LoginRequiredMixin, CreateView):
         parking.pk_lot = form.cleaned_data['pk_lot']
         parking.pk_timein = form.cleaned_data['pk_timein']
         parking.pk_timeout = form.cleaned_data['pk_timeout']
-        # eror checking
+        # error checking
         if parking.pk_timeout and parking.pk_timein and parking.pk_timeout < parking.pk_timein:
             raise ValidationError("Invalid input: pk_timeout cannot be less than pk_timein.")
 
@@ -46,16 +46,27 @@ class ParkingViewCreate(LoginRequiredMixin, CreateView):
         # Save the Parking object to the database
         parking.save()
 
-        # create a new invoice with the parking fee, when there's no invoice
-        temp = JlsInvoi.objects.create(
-            invoi_date=date.today(),
-            invoi_amount=parking.pk_fee,
-            invoi_type='Parkings'
-        )
-        temp.save()
+        # get the current
+        pk = JlsInvoi.objects.all()
 
+        newpk = pk.filter(invoi_date=date.today(), invoi_type='Parkings', jlsparkings__v__v_id=visitor.v_id)
+
+        if len(newpk) != 0:
+            invoi = newpk.first()
+            parking.invoi_id = invoi.invoi_id
+            invoi.invoi_amount += parking.pk_fee
+            invoi.save()
+        else:
+            # create a new invoice with the parking fee, when there's no invoice
+            temp = JlsInvoi.objects.create(
+                invoi_date=date.today(),
+                invoi_amount=parking.pk_fee,
+                invoi_type='Parkings'
+            )
+            temp.save()
+            parking.invoi_id = temp.invoi_id
         # use the newly create invoice id to fill in the parking invoice id
-        parking.invoi_id = temp.invoi_id
+
         parking.save()
 
         # Redirect to the success URL
@@ -64,8 +75,9 @@ class ParkingViewCreate(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            # visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
-            context["parkingCount"] = JlsParkings.objects.count()
+            visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
+            count = JlsParkings.objects.filter(v_id = visitor.v_id)
+            context["parkingCount"] = len(count)
 
         return context
 
@@ -81,9 +93,10 @@ class ParkingViewDeleteAll(LoginRequiredMixin, View):
     def post(self, request):
         current_user_id = self.request.user.id
         visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
-        group = JlsParkings.objects.filter(v_id=visitor.v_id)
 
+        temp = JlsParkings.objects.filter(v_id=visitor.v_id).first()
 
+        group = JlsInvoi.objects.filter(invoi_id=temp.invoi_id)
         #
         # objects_to_delete = MyModel.objects.filter(v_id=37)
 
