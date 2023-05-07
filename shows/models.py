@@ -20,9 +20,10 @@ class JlsShows(models.Model):
     class Meta:
         db_table = 'jls_shows'
 
+
 class JlsVsi(models.Model):
     vsi_id = models.AutoField(primary_key=True, db_comment='unique vsi id')
-    vsi_quant = models.DecimalField(max_digits=5, decimal_places=2, default=0, db_comment='quantity of the shows')
+    vsi_quant = models.IntegerField(default=0, db_comment='quantity of the shows')
     v = models.ForeignKey(JlsVisitors, models.DO_NOTHING)
     sh = models.ForeignKey(JlsShows, models.DO_NOTHING)
     invoi = models.ForeignKey(JlsInvoi, models.CASCADE, null=True)

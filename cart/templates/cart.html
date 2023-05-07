@@ -15,19 +15,27 @@
   {% endfor %}
 {% endif %}
 
+{#membership#}
 {% if ifmem > 0 %}
     <h3>Membership</h3>
     <li>Membership ID: {{ memnumber }} Price: $99</li>
 {% endif %}
+
+{% if vsi_count  != 0%}
+    <h3>Shows</h3>
+  {% for x in myvsi %}
+    <li>Show name: {{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}Ticket price: {{ x.invoi.invoi_amount}}</li>
+  {% endfor %}
+{% endif %}
+
+{#parking#}
 {% if parking_count  != 0%}
     <h3>Parking</h3>
   {% for x in myparking %}
     <li>Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount: ${{ x.pk_fee }} </li>
   {% endfor %}
 {% endif %}
-{#      if nothing, then display nothing found#}
 
-{#      <h2>Nothing found </h2>#}
 
 </ul>
 

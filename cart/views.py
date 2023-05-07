@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 
+from shows.models import JlsVsi, JlsShows
 from visitor.models import JlsVisitors, JlsMember
 from ticket.models import JlsTickets
 from parking.models import JlsParkings
@@ -19,7 +20,8 @@ def cart(request):
 
     # tickets
     mytickets = JlsTickets.objects.filter(v_id=visitor.v_id)
-    ticket_count = JlsTickets.objects.count()
+    ticket_count = JlsTickets.objects.filter(v_id=visitor.v_id).count()
+    ticketfee = JlsTickets.objects.filter(v_id= visitor.v_id)
 
     # membership
     mem_number = 0
@@ -27,14 +29,21 @@ def cart(request):
         mem_number = JlsMember.objects.get(v_id=visitor.v_id).mem_id
     ifmem = len(JlsMember.objects.filter(v_id=visitor.v_id, ))
 
+    # shows
+    myvsi = JlsVsi.objects.filter(v_id=visitor.v_id)
+    vsi_count = JlsVsi.objects.filter(v_id=visitor.v_id).count()
+
     myparking = JlsParkings.objects.filter(v_id=visitor.v_id)
-    parking_count = JlsParkings.objects.count()
+    parking_count = JlsParkings.objects.filter(v_id=visitor.v_id).count()
+
 
     context = {
         'mytickets': mytickets,
         'ticket_count': ticket_count,
         'memnumber': mem_number,
         'ifmem': ifmem,
+        'myvsi': myvsi,
+        'vsi_count': vsi_count,
         'myparking': myparking,
         'parking_count': parking_count,
 
