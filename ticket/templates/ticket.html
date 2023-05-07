@@ -11,12 +11,28 @@
 <p>Fee: $10.00</p>
 <p>#No addtional fees for all attractions in the park.</p>
 <p>#Discount will be calculated automatically.</p>
+
+<ul>
+    {#go through the cart#}
+    {% if ticket_count  != 0%}
+        <h3>Your Tickets</h3>
+        {% for x in myticket %}
+        <li>Visit Date: {{ x.tk_vdate }} Ticket Price:{{ x.tk_price }} Discount:{{ x.tk_discount }} </li>
+        {% endfor %}
+        {% endif %}
+    {# if nothing, then display nothing found#}
+    
+    {# <h2>Nothing found </h2>#}
+    
+</ul>
+
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <!-- <input type="submit" value="Create" /> -->
     <input type="date" id="start" name="visit date">
-    <button type="submit"> Add Ticket </button>
+    <button class="btn btn-secondary" type="submit" name="add_ticket">Add Ticket</button>
+    <button class="btn btn-danger" type="submit" name="delete_ticket">Delete Ticket</button>
 </form>
 {% include 'messages.html' %}
 

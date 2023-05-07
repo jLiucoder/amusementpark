@@ -38,6 +38,16 @@
                     <p class="card-text">{{ x.it_des }}</p>
                     <p class="card-text">Price: {{ x.it_uprice }}</p>
                 </div>
+                <quantity-input class="quantity">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ x.it_id }}">
+                        <!-- <button class="quantity__button no-js-hidden" name="minus" type="button">-</button> -->
+                        <input class="quantity__input" type="number" name="quantity" id="quant" min="1" max="3" value="1">
+                        <!-- <button class="quantity__button no-js-hidden" name="plus" type="button">+</button> -->
+                        <input type="submit" value="Add to Cart">
+                    </form>
+                </quantity-input>
 
             </div>
         </div>
