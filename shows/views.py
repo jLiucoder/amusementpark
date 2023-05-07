@@ -1,22 +1,62 @@
-from django.shortcuts import render
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from datetime import date, timezone
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
-from .models import JlsShows
+from django.views import View
+from django.views.generic import CreateView
+
+from .models import JlsShows, JlsVsi
+from cart.models import JlsInvoi
+from visitor.models import JlsVisitors
 
 
-# @login_required(login_url='home')
-# def shows(request):
-#     # template = loader.get_template('cart.html')
-#     # return HttpResponse(template.render(context, request))
-#     return render(request, 'shows.html')
-@login_required(login_url='home')
-def shows(request):
+def shows_view(request):
     myShows = JlsShows.objects.all().values()
-    template = loader.get_template('shows.html')
-    context = {
-        'myShows': myShows,
-    }
-    return HttpResponse(template.render(context, request))
+    if request.method == 'POST':
+        show_id = request.POST.get("show_id")
+
+        # get the current user
+        current_user_id = request.user.id
+        visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
+
+        # get all invoice and filter out the users as today, shows type and current logged in user
+        all_invoice = JlsInvoi.objects.all()
+        today_pk_usrshow = all_invoice.filter(invoi_date=date.today(), invoi_type='Shows', jlsvsi__v__v_id=visitor.v_id)
+
+
+        # temp vsi to populate along the way
+        tempVsi = JlsVsi()
+        tempVsi.v_id = visitor.v_id
+        tempVsi.sh = JlsShows.objects.get(sh_id=show_id)
+        tempVsi.vsi_quant += 1
+        tempVsi.save()
+
+        # calculate the money
+        fee = tempVsi.sh.sh_price * tempVsi.vsi_quant
+
+        if len(today_pk_usrshow) != 0:
+            invoi = today_pk_usrshow.first()
+            tempVsi.invoi_id = invoi.invoi_id
+            invoi.invoi_amount += fee
+            invoi.save()
+
+        else:
+            # temp invoice
+            tempinvoi = JlsInvoi.objects.create(
+                invoi_date=date.today(),
+                invoi_amount=fee,
+                invoi_type='Shows'
+            )
+            tempinvoi.save()
+
+            tempVsi.invoi_id = tempinvoi.invoi_id
+        tempVsi.save()
+
+        # redirect to success URL
+        return redirect('shows')
+
+    # if request.method is GET, render the template with myShows
+    return render(request, 'shows.html', {'myShows': myShows})

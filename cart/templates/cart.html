@@ -8,10 +8,21 @@
 
 <ul>
 {#go through the cart#}
+{% if ticket_count  != 0%}
+    <h3>Ticket</h3>
+  {% for x in mytickets %}
+    <li>Ticket method: {{ x.tk_method }} Purchase date: {{ x.tk_purdate }} Ticket price: {{ x.tk_price }}</li>
+  {% endfor %}
+{% endif %}
+
+{% if ifmem > 0 %}
+    <h3>Membership</h3>
+    <li>Membership ID: {{ memnumber }} Price: $99</li>
+{% endif %}
 {% if parking_count  != 0%}
     <h3>Parking</h3>
   {% for x in myparking %}
-    <li>Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount:{{ x.pk_fee }} </li>
+    <li>Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount: ${{ x.pk_fee }} </li>
   {% endfor %}
 {% endif %}
 {#      if nothing, then display nothing found#}

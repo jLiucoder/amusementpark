@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 
-from visitor.models import JlsVisitors
+from visitor.models import JlsVisitors, JlsMember
 from ticket.models import JlsTickets
 from parking.models import JlsParkings
 from .models import JlsInvoi
@@ -17,13 +17,27 @@ def cart(request):
     # template used
     template = loader.get_template('cart.html')
 
-    # this goes through all parking the user ordered
+    # tickets
+    mytickets = JlsTickets.objects.filter(v_id=visitor.v_id)
+    ticket_count = JlsTickets.objects.count()
+
+    # membership
+    mem_number = 0
+    if len(JlsMember.objects.filter(v_id=visitor.v_id, )) > 0:
+        mem_number = JlsMember.objects.get(v_id=visitor.v_id).mem_id
+    ifmem = len(JlsMember.objects.filter(v_id=visitor.v_id, ))
+
     myparking = JlsParkings.objects.filter(v_id=visitor.v_id)
     parking_count = JlsParkings.objects.count()
 
     context = {
+        'mytickets': mytickets,
+        'ticket_count': ticket_count,
+        'memnumber': mem_number,
+        'ifmem': ifmem,
         'myparking': myparking,
         'parking_count': parking_count,
+
     }
 
     return HttpResponse(template.render(context, request))

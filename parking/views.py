@@ -47,12 +47,12 @@ class ParkingViewCreate(LoginRequiredMixin, CreateView):
         parking.save()
 
         # get the current
-        pk = JlsInvoi.objects.all()
+        all_invoice = JlsInvoi.objects.all()
 
-        newpk = pk.filter(invoi_date=date.today(), invoi_type='Parkings', jlsparkings__v__v_id=visitor.v_id)
+        today_pk_usrinvoi = all_invoice.filter(invoi_date=date.today(), invoi_type='Parkings', jlsparkings__v__v_id=visitor.v_id)
 
-        if len(newpk) != 0:
-            invoi = newpk.first()
+        if len(today_pk_usrinvoi) != 0:
+            invoi = today_pk_usrinvoi.first()
             parking.invoi_id = invoi.invoi_id
             invoi.invoi_amount += parking.pk_fee
             invoi.save()
@@ -76,7 +76,7 @@ class ParkingViewCreate(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             visitor = JlsVisitors.objects.filter(user_id=self.request.user.id).first()
-            count = JlsParkings.objects.filter(v_id = visitor.v_id)
+            count = JlsParkings.objects.filter(v_id=visitor.v_id)
             context["parkingCount"] = len(count)
 
         return context
