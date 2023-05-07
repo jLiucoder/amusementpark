@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -15,15 +15,17 @@ from cart.models import JlsInvoi
 
 class StoreViewCreate(LoginRequiredMixin, CreateView):
     template_name = 'stores.html'
+
     def get_success_url(self):
         return redirect(self.template_name)
 
     def get_context_data(self):
         if self.request.user.is_authenticated:
-             context = {
+            context = {
                 'stores': JlsStores.objects.all(),
             }
         return context
+
 
 class ItemViewCreate(LoginRequiredMixin, CreateView):
     template_name = 'store_items.html'
@@ -44,47 +46,46 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
                 'items': items
             }
         return context
-    
+
     # def form_valid(self, request, form):
     #     print('sljkdhfao;hurg')
     #     store_id = self.kwargs['store_id']
     #     store = get_object_or_404(JlsStores, st_id=store_id)
     #     selected_items = []
-        # quantity_list = []
-        # for s_items in self.request.POST.getlist('item_id'):
-        #     selected_items.append(s_items)
-        
-        # items = JlsItems.objects.filter(st=store)
-        # selected_items = self.request.POST.getlist('item_id')
-        # quantity_list = form.cleaned_data['quantity']
-        # print(selected_items)
+    # quantity_list = []
+    # for s_items in self.request.POST.getlist('item_id'):
+    #     selected_items.append(s_items)
 
-        # for i, item_id in enumerate(selected_items):
-        #     item = get_object_or_404(items, it_id=item_id)
-        #     quantity = quantity_list[i]
-        #     print('item id: ', item_id)
-        #     print('item name: ', item)
-        #     print('quantity: ', quantity)
+    # items = JlsItems.objects.filter(st=store)
+    # selected_items = self.request.POST.getlist('item_id')
+    # quantity_list = form.cleaned_data['quantity']
+    # print(selected_items)
 
-        # return redirect(reverse('store_items', args=[store_id]))
-        
-    
+    # for i, item_id in enumerate(selected_items):
+    #     item = get_object_or_404(items, it_id=item_id)
+    #     quantity = quantity_list[i]
+    #     print('item id: ', item_id)
+    #     print('item name: ', item)
+    #     print('quantity: ', quantity)
+
+    # return redirect(reverse('store_items', args=[store_id]))
+
     def post(self, request, *args, **kwargs):
         store_id = self.kwargs['store_id']
-        
+
         item_id = request.POST.get('item_id')
         quantity = request.POST.get('quantity')
         print('item id: ', item_id)
         print('quantity: ', quantity)
-        
+
         # Get the item object
         item = JlsItems.objects.get(pk=item_id)
         print(item.it_id, item.it_name, item.it_uprice)
-        
+
         # Create a new cart item object
         # cart_item = JlsCartItems(item=item, quantity=quantity)
         # cart_item.save()
-        
+
         return redirect(reverse('store_items', args=[store_id]))
 
 # The store_items function retrieves the corresponding store from the database using the get_object_or_404 function

@@ -37,26 +37,30 @@
             {% for x in myShows %}
                 <div class="col">
 
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src={{ x.sh_link }} alt="Card image cap">
+                    <div class="card " style="width: 18rem;">
+                        <img class="card-img-top" src={{ x.sh_link }} style="width:100%;height:15vw;object-fit:cover;" alt="">
                         <div class="card-body">
                             <h5 class="card-title">{{ x.sh_name }}</h5>
                             <p class="card-text">{{ x.sh_des }}</p>
-                            <p class="card-text">Type: {{ x.sh_type }}</p>
+                            <p class="card-text">{{ x.sh_type }}</p>
                             <p class="card-text">Start date: {{ x.sh_stime }}</p>
                             <p class="card-text">End date: {{ x.sh_etime }}</p>
-                            <p class="card-text">Wheelchair Access: {{ x.sh_wcacc }}</p>
+                            {% if x.sh_wcacc == 'Y' %}
+                            <p class="card-text">Wheelchair Accessible</p>
+                            {% else %}
+                            {% endif %}
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Show price: {{ x.sh_price }}</li>
+                            <li class="list-group-item">price: ${{ x.sh_price }}</li>
                         </ul>
-{#                        <div class="card-body">#}
+                        <div class="card-body">
                             <form method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="show_id" value="{{ x.sh_id }}">
-                                <button type="submit" >Buy {{ x.sh_name }}</button>
+                                <input class="quantity__input" type="number" name="quantity" id="quant" min="1" max="5" value="1">
+                                <button type="submit" class="btn btn-secondary">Buy {{ x.sh_name }}</button>
                             </form>
-{#                        </div>#}
+                        </div>
                     </div>
                 </div>
             {% endfor %}

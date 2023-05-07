@@ -3,14 +3,14 @@
 
 {% block content %}
 
-<body>
+<body style="background-image: url('../../../static/img/background.jpg'); background-size: 1800px 960px; color: gray;">
 
     {% if not user.is_authenticated%}
-    <h1>welcome to the park! newcomer!</h1>
+    <h1 class="display-1" >welcome to the park! newcomer!</h1>
         <h2>Signup or signin to continue</h2>
     {% else %}
-    <h1>welcome to the park! {{ user }}!</h1>
-
+    <h1 class="display-1" >welcome to the park! {{ user }}!</h1>
+    <p class="display-6">today is {{ today }}</p>
      <div>
 {#        insert links here for membership page and group page#}
         <a href="{% url 'memberships' %}" class="btn btn-primary">Membership</a>
@@ -19,7 +19,7 @@
 
 
     {% endif %}
-    <p>today is {{ today }}</p>
+
 
 
 

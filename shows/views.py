@@ -17,6 +17,7 @@ def shows_view(request):
     myShows = JlsShows.objects.all().values()
     if request.method == 'POST':
         show_id = request.POST.get("show_id")
+        show_quant = request.POST.get("quantity")
 
         # get the current user
         current_user_id = request.user.id
@@ -31,11 +32,12 @@ def shows_view(request):
         tempVsi = JlsVsi()
         tempVsi.v_id = visitor.v_id
         tempVsi.sh = JlsShows.objects.get(sh_id=show_id)
-        tempVsi.vsi_quant += 1
+        # get the show quantity here
+        tempVsi.vsi_quant = show_quant
         tempVsi.save()
 
         # calculate the money
-        fee = tempVsi.sh.sh_price * tempVsi.vsi_quant
+        fee = float(tempVsi.sh.sh_price) * float(tempVsi.vsi_quant)
 
         if len(today_pk_usrshow) != 0:
             invoi = today_pk_usrshow.first()

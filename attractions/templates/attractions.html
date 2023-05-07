@@ -29,19 +29,19 @@
     <div class="col">
 
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src={{ x.att_link }} alt="Card image cap">
+            <img class="card-img-top" src={{ x.att_link }} alt="Card image cap" style="width:100%;height:15vw;object-fit:cover;">
             <div class="card-body">
                 <h5 class="card-title">{{ x.att_name }}</h5>
                 <p class="card-text">{{ x.att_desrip }}</p>
-                <p class="card-text">Type: {{ x.att_type }}</p>
-                <p class="card-text">Capacity: {{ x.att_capacity }}</p>
-                <p class="card-text">Minimum height: {{ x.att_minhei }}</p>
-                <p class="card-text">Duration: {{ x.att_duration }}</p>
-                <p class="card-text">Loc section: {{ x.att_locsec }}</p>
+                <p class="card-text">{{ x.att_type }}</p>
+{#                <p class="card-text">Capacity: {{ x.att_capacity }}</p>#}
+                <p class="card-text"> {{ x.att_duration }} minutes</p>
+                <p class="card-text">Location: {{ x.att_locsec }}</p>
+                 <p class="card-text">Height with {{ x.att_minhei }} CM or above required</p>
 
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Attraction status: {{ x.att_status }}</li>
+                <li class="list-group-item">Status: {{ x.att_status }}</li>
             </ul>
 
         </div>
