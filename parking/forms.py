@@ -2,13 +2,13 @@ from django import forms
 
 from parking.models import JlsParkings
 
-
-SECTION= [
+SECTION = [
     ('A', 'A'),
     ('B', 'B'),
     ('C', 'C'),
     ('D', 'D'),
-    ]
+]
+
 
 class ParkingForm(forms.ModelForm):
     # date = fields.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
