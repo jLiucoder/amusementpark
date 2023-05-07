@@ -96,7 +96,9 @@ class ParkingViewDeleteAll(LoginRequiredMixin, View):
 
         temp = JlsParkings.objects.filter(v_id=visitor.v_id).first()
 
-        group = JlsInvoi.objects.filter(invoi_id=temp.invoi_id)
+        # added filter function that deletes from the invoice table,
+        # but the logic might not be right since it oonly deletes the invoice for today
+        group = JlsInvoi.objects.filter(invoi_id=temp.invoi_id, date=date.today())
         #
         # objects_to_delete = MyModel.objects.filter(v_id=37)
 

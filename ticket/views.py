@@ -57,7 +57,9 @@ class TicketView(LoginRequiredMixin, View):
         return HttpResponse(template.render(context, request))
 
     def post(self, request, **kwargs):
+        # current logged in user
         current_user_id = self.request.user.id
+        visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
         if 'add_ticket' in request.POST:
             vdate = request.POST.get('visit date')
             # if the user didn't choose a date
@@ -93,7 +95,15 @@ class TicketView(LoginRequiredMixin, View):
                     new_tk.invoi_id = temp.invoi_id
                     new_tk.save()
         else:
-            all_tk = JlsTickets.objects.filter(v_id=current_user_id)
-            all_tk.delete()
+            # all_tk = JlsTickets.objects.filter(v_id=current_user_id)
+            all_tk = JlsTickets.objects.filter(v_id=visitor.v_id).first()
+
+            group = JlsInvoi.objects.filter(invoi_id=all_tk.invoi_id)
+            #
+            # objects_to_delete = MyModel.objects.filter(v_id=37)
+
+            for obj in group:
+                obj.delete()
+            # all_tk.delete()
             messages.success(request, 'Successfully deleted all tickets')
         return render(request, self.template_name)
