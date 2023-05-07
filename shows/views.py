@@ -29,13 +29,15 @@ def shows_view(request):
         all_invoice = JlsInvoi.objects.all()
         today_pk_usrshow = all_invoice.filter(invoi_date=date.today(), invoi_type='Shows', jlsvsi__v__v_id=visitor.v_id)
 
+        # create temp vsi object
         tempVsi = JlsVsi()
+        # if there's already something in the vsi table, we jsut add the quantity to it
         if len(JlsVsi.objects.filter(v_id=visitor.v_id, sh_id=show_id)) > 0:
             tempVsi = JlsVsi.objects.filter(v_id=visitor.v_id, sh_id=show_id).first()
             tempVsi.vsi_quant += int(show_quant)
+        # else we populate everything in the vsi table
         else:
             # temp vsi to populate along the way
-            # tempVsi = JlsVsi()
             tempVsi.v_id = visitor.v_id
             tempVsi.sh = JlsShows.objects.get(sh_id=show_id)
             # get the show quantity here
@@ -45,6 +47,7 @@ def shows_view(request):
         # calculate the money
         fee = float(tempVsi.sh.sh_price) * float(tempVsi.vsi_quant)
 
+        # if there's something in the invoice table, we jsut add things to it
         if len(today_pk_usrshow) != 0:
             invoi = today_pk_usrshow.first()
             tempVsi.invoi_id = invoi.invoi_id

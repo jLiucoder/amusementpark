@@ -24,7 +24,7 @@ class StoreViewCreate(LoginRequiredMixin, CreateView):
             context = {
                 'stores': JlsStores.objects.all(),
             }
-        return context
+            return context
 
 
 class ItemViewCreate(LoginRequiredMixin, CreateView):

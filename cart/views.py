@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
@@ -21,7 +23,8 @@ def cart(request):
     # tickets
     mytickets = JlsTickets.objects.filter(v_id=visitor.v_id)
     ticket_count = JlsTickets.objects.filter(v_id=visitor.v_id).count()
-    ticketfee = JlsTickets.objects.filter(v_id= visitor.v_id)
+    # not done yet not sure what to do
+    ticketfee = JlsTickets.objects.filter(v_id=visitor.v_id)
 
     # membership
     mem_number = 0
@@ -36,7 +39,6 @@ def cart(request):
     myparking = JlsParkings.objects.filter(v_id=visitor.v_id)
     parking_count = JlsParkings.objects.filter(v_id=visitor.v_id).count()
 
-
     context = {
         'mytickets': mytickets,
         'ticket_count': ticket_count,
@@ -44,6 +46,7 @@ def cart(request):
         'ifmem': ifmem,
         'myvsi': myvsi,
         'vsi_count': vsi_count,
+
         'myparking': myparking,
         'parking_count': parking_count,
 

@@ -24,8 +24,9 @@
 {% if vsi_count  != 0%}
     <h3>Shows</h3>
   {% for x in myvsi %}
-    <li>Show name: {{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}Ticket price: {{ x.invoi.invoi_amount}}</li>
+    <li>Show name: {{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
   {% endfor %}
+    <h5>price for tickets: {{ myvsi.invoi.invoi_amount}}</h5>
 {% endif %}
 
 {#parking#}
