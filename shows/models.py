@@ -1,5 +1,6 @@
 from django.db import models
-
+from cart.models import JlsInvoi
+from visitor.models import JlsVisitors
 
 # Create your models here.
 
@@ -17,3 +18,13 @@ class JlsShows(models.Model):
 
     class Meta:
         db_table = 'jls_shows'
+
+class JlsVsi(models.Model):
+    vsi_id = models.AutoField(primary_key=True)
+    v = models.ForeignKey(JlsVisitors, models.DO_NOTHING)
+    sh = models.ForeignKey(JlsShows, models.DO_NOTHING)
+    invoi = models.ForeignKey(JlsInvoi, models.CASCADE, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'jls_vsi'

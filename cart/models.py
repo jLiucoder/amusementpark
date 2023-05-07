@@ -14,8 +14,7 @@ class JlsInvoi(models.Model):
     invoi_id = models.AutoField(primary_key=True, db_comment='Unique Invoice ID')
     invoi_date = models.DateField(db_comment='Date for the corresponding invoice')
     invoi_amount = models.IntegerField(db_comment='Invoice amount (how much money). ')
-    invoi_type = models.CharField(max_length=20,
-                                  db_comment='Invoice type. Type can be "Tickets, Shows, Stores, Parkings". ')
+    invoi_type = models.CharField(max_length=20, db_comment='Invoice type. Type can be "Tickets, Shows, Stores, Parkings". ')
 
     class Meta:
         db_table = 'jls_invoi'
