@@ -62,39 +62,37 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
         self.add_to_cart(visitor.v_id, store_id, item_id, quantity)
 
         return redirect(reverse('store_items', args=[store_id]))
-
+    
     def add_to_cart(self, v_id, store_id, item_id, quantity):
         item = JlsItems.objects.get(pk=item_id)
 
         new_item = JlsOrder()
         new_item.order_date = timezone.now()
         new_item.order_quant = quantity
-        new_item.it_id = item.it_id
+        new_item.it_id = item_id
         new_item.st_id = store_id
         new_item.v_id = v_id
 
         all_invoice = JlsInvoi.objects.all()
         in_st_today = all_invoice.filter(invoi_date=date.today(), invoi_type='Stores', jlsorder__v_id=v_id)
-        print(len(in_st_today), date.today(), v_id == new_item.v_id)
         # if there's a invoice for the order today
         if len(in_st_today) != 0:
-            print('here')
             invoi = in_st_today.first()
             # if this order has not been paid
             if JlsPay.objects.filter(invoi_id=invoi.invoi_id) != None:
                 new_item.invoi_id = invoi.invoi_id
-                invoi.invoi_amount += quantity * item.it_uprice
+                invoi.invoi_amount += quantity*item.it_uprice
                 invoi.save()
         else:
             # create a new invoice when there's no invoice
             temp = JlsInvoi.objects.create(
-                invoi_date=date.today(),
-                invoi_amount=quantity * item.it_uprice,
-                invoi_type='Stores'
+                invoi_date = date.today(),
+                invoi_amount = quantity*item.it_uprice,
+                invoi_type = 'Stores'
             )
             temp.save()
             new_item.invoi_id = temp.invoi_id
-            new_item.save()
+        new_item.save()
 
     # def form_valid(self, request, form):
     #     print('sljkdhfao;hurg')
@@ -118,6 +116,7 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
     #     print('quantity: ', quantity)
 
     # return redirect(reverse('store_items', args=[store_id]))
+
 
 # The store_items function retrieves the corresponding store from the database using the get_object_or_404 function
 # and filters the JlsItems queryset to only include items with the selected store
