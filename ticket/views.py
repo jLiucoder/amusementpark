@@ -49,7 +49,8 @@ class TicketView(LoginRequiredMixin, View):
         template = loader.get_template(self.template_name)
 
         current_user_id = self.request.user.id
-        myticket = JlsTickets.objects.filter(v_id=current_user_id).order_by('tk_vdate')
+        visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
+        myticket = JlsTickets.objects.filter(v_id=visitor.v_id).order_by('tk_vdate')
         ticket_count = JlsTickets.objects.count()
         context = {
             'myticket': myticket,
