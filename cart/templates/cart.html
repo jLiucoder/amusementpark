@@ -2,69 +2,80 @@
 
 {% block content %}
 
-<body>
+    <body>
 
-<h1>Cart</h1>
-
-<ul>
-{#go through the cart#}
-{#membership#}
-{% if ifmem > 0 %}
-    <h3>Membership</h3>
-    <li style="list-style: none">Membership ID: {{ memnumber }} Price: $99</li>
-    <br>
-{#    <form method="post">#}
-{#        {% csrf_token %}#}
-{#        <input type="submit" class="btn btn-secondary btn-danger" name='delete-membership' value="Delete">#}
-{#    </form>#}
-{% endif %}
-
-{% if ticket_count  != 0%}
-    <h3>Tickets</h3>
-  {% for x in mytickets %}
-    <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }}</li>
-  {% endfor %}
-{#    <form method="post">#}
-{#        {% csrf_token %}#}
-{#        <input type="submit" class="btn btn-secondary btn-danger"  name='delete-tickets' value="Delete">#}
-{#    </form>#}
-    <br>
-{% endif %}
-
-{% if vsi_count  != 0%}
-    <h3>Shows</h3>
-  {% for x in myvsi %}
-    <li style="list-style: none">{{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
-  {% endfor %}
-    <li style="list-style: none">Total price for shows: ${{ show_price}}</li>
-{#    <form method="post">#}
-{#        {% csrf_token %}#}
-{#        <input type="submit" class="btn btn-secondary btn-danger" name='delete-shows' value="Delete">#}
-{#    </form>#}
-    <br>
-{% endif %}
-
-
-
-{#parking#}
-{% if parking_count  != 0%}
-    <h3>Parking</h3>
-  {% for x in myparking %}
-    <li style="list-style: none">Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount: ${{ x.pk_fee }} </li>
-
-  {% endfor %}
-    <form method="post">
+    <h1>Cart</h1>
+    <form method="POST">
         {% csrf_token %}
-        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
+
+        <ul>
+            {#go through the cart#}
+            {#membership#}
+
+            {% if ifmem > 0 %}
+                <h3>Membership</h3>
+                <li style="list-style: none">Membership ID: {{ memnumber }} Price: $99</li>
+
+                <button type="submit" class="btn btn-secondary btn-danger" name='delete-membership'>Delete</button>
+                <br>
+                {#    <form method="post">#}
+                {#{% csrf_token %}#}
+{#                        <input type="submit" class="btn btn-secondary btn-danger" name='delete-membership' value="Delete">#}
+                {#    </form>#}
+
+            {% endif %}
+
+            {% if ticket_count  != 0 %}
+                <h3>Tickets</h3>
+                {% for x in mytickets %}
+                    <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }}</li>
+                {% endfor %}
+                {#    <form method="post">#}
+{#                        {% csrf_token %}#}
+                {#        <input type="submit" class="btn btn-secondary btn-danger"  name='delete-tickets' value="Delete">#}
+                {#    </form>#}
+                <button type="submit" class="btn btn-secondary btn-danger" name='delete-tickets'>Delete</button>
+                <br>
+            {% endif %}
+
+            {% if vsi_count  != 0 %}
+                <h3>Shows</h3>
+                {% for x in myvsi %}
+                    <li style="list-style: none">{{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
+                {% endfor %}
+                <li style="list-style: none">Total price for shows: ${{ show_price }}</li>
+                {#    <form method="post">#}
+{#                        {% csrf_token %}#}
+                {#        <input type="submit" class="btn btn-secondary btn-danger" name='delete-shows' value="Delete">#}
+                {#    </form>#}
+                <button type="submit" class="btn btn-secondary btn-danger" name='delete-shows'>Delete</button>
+                <br>
+            {% endif %}
+
+            {#parking#}
+            {% if parking_count  != 0 %}
+                <h3>Parking</h3>
+                {% for x in myparking %}
+                    <li style="list-style: none">Reserved starting time: {{ x.pk_timein }} Ending
+                        time:{{ x.pk_timeout }}
+                        Amount: ${{ x.pk_fee }} </li>
+
+                {% endfor %}
+                {#                <form method="post">#}
+                {#                    {% csrf_token %}#}
+                {#                    <input type="submit" class="btn btn-secondary btn-danger" value="Delete">#}
+                {#                </form>#}
+                <button type="submit" class="btn btn-secondary btn-danger" name='delete-parkings'>Delete</button>
+                <br>
+            {% endif %}
+
+
+        </ul>
     </form>
-    <br>
-{% endif %}
+    <a href="{% url 'pay' %}">
+        <button type="button"> payment</button>
+    </a>
 
-
-</ul>
-
-<a href="{% url 'pay' %}"><button type="button"> payment </button></a>
-
-</body>
+    </body>
 
 {% endblock %}
