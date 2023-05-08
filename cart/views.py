@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from shows.models import JlsVsi, JlsShows
+from stores.models import JlsOrder
 from visitor.models import JlsVisitors, JlsMember
 from ticket.models import JlsTickets
 from parking.models import JlsParkings
@@ -45,7 +46,8 @@ def cart(request):
     parking_count = JlsParkings.objects.filter(v_id=visitor.v_id).count()
 
     # stores
-    # mystore =
+    mystore = JlsOrder.objects.filter(v_id=visitor.v_id)
+
 
 
     context = {

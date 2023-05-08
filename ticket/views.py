@@ -66,7 +66,7 @@ class TicketView(LoginRequiredMixin, View):
             if vdate == "":
                 messages.success(request, "Please select a date to visit")
             else:
-                tk = JlsTickets.objects.filter(v_id=current_user_id, tk_vdate=vdate)
+                tk = JlsTickets.objects.filter(v_id=visitor.v_id, tk_vdate=vdate)
                 # if the user already bought a ticket for that day
                 if len(tk) != 0:
                     messages.success(request, "You've already bought a ticket!")

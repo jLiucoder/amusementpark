@@ -13,10 +13,10 @@
     <h3>Membership</h3>
     <li style="list-style: none">Membership ID: {{ memnumber }} Price: $99</li>
     <br>
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
-    </form>
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        <input type="submit" class="btn btn-secondary btn-danger" name='delete-membership' value="Delete">#}
+{#    </form>#}
 {% endif %}
 
 {% if ticket_count  != 0%}
@@ -24,10 +24,10 @@
   {% for x in mytickets %}
     <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }}</li>
   {% endfor %}
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
-    </form>
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        <input type="submit" class="btn btn-secondary btn-danger"  name='delete-tickets' value="Delete">#}
+{#    </form>#}
     <br>
 {% endif %}
 
@@ -37,10 +37,10 @@
     <li style="list-style: none">{{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
   {% endfor %}
     <li style="list-style: none">Total price for shows: ${{ show_price}}</li>
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
-    </form>
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        <input type="submit" class="btn btn-secondary btn-danger" name='delete-shows' value="Delete">#}
+{#    </form>#}
     <br>
 {% endif %}
 
