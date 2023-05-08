@@ -72,11 +72,10 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
         new_item.it_id = item.it_id
         new_item.st_id = store_id
         new_item.v_id = v_id
-        new_item.save()
 
         all_invoice = JlsInvoi.objects.all()
-        in_st_today = all_invoice.filter(invoi_date=date.today(), invoi_type='Stores')
-        print(len(in_st_today), date.today(), v_id)
+        in_st_today = all_invoice.filter(invoi_date=date.today(), invoi_type='Stores', jlsorder__v_id=v_id)
+        print(len(in_st_today), date.today(), v_id==new_item.v_id)
         # if there's a invoice for the order today
         if len(in_st_today) != 0:
             print('here')
@@ -95,6 +94,7 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
             )
             temp.save()
             new_item.invoi_id = temp.invoi_id
+            new_item.save()
 
     # def form_valid(self, request, form):
     #     print('sljkdhfao;hurg')

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from django.template import loader
 from django.contrib import messages
@@ -43,12 +44,12 @@ class TicketView(LoginRequiredMixin, View):
 
     def calculatePrice(self, price, discount):
         return price*(1-discount)
-
+    
     def get(self, request):
-        template = loader.get_template('ticket.html')
+        template = loader.get_template(self.template_name)
 
-        current_user_id = request.user.id
-        myticket = JlsTickets.objects.filter(v_id=current_user_id)
+        current_user_id = self.request.user.id
+        myticket = JlsTickets.objects.filter(v_id=current_user_id).order_by('tk_vdate')
         ticket_count = JlsTickets.objects.count()
         context = {
             'myticket': myticket,
@@ -56,10 +57,12 @@ class TicketView(LoginRequiredMixin, View):
         }
         return HttpResponse(template.render(context, request))
 
-    def post(self, request, **kwargs):
+    def post(self, request):
+        template = loader.get_template(self.template_name)
         # current logged in user
         current_user_id = self.request.user.id
         visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
+
         if 'add_ticket' in request.POST:
             vdate = request.POST.get('visit date')
             # if the user didn't choose a date
@@ -94,8 +97,9 @@ class TicketView(LoginRequiredMixin, View):
                     # use the newly create invoice id to fill in the ticket invoice id
                     new_tk.invoi_id = temp.invoi_id
                     new_tk.save()
+            return redirect(reverse('ticket'))
         else:
-            # all_tk = JlsTickets.objects.filter(v_id=current_user_id)
+            all_tks = JlsTickets.objects.filter(v_id=visitor.v_id)
             all_tk = JlsTickets.objects.filter(v_id=visitor.v_id).first()
 
             group = JlsInvoi.objects.filter(invoi_id=all_tk.invoi_id)
@@ -104,6 +108,6 @@ class TicketView(LoginRequiredMixin, View):
 
             for obj in group:
                 obj.delete()
-            # all_tk.delete()
+            all_tks.delete()
             messages.success(request, 'Successfully deleted all tickets')
-        return render(request, self.template_name)
+        return redirect(reverse('ticket'))
