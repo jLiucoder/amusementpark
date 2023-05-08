@@ -17,7 +17,7 @@
     {% if ticket_count  != 0%}
         <h3>Your Tickets</h3>
         {% for x in myticket %}
-        <li>Visit Date: {{ x.tk_vdate }} Ticket Price:{{ x.tk_price }} Discount:{{ x.tk_discount }} </li>
+        <li style="list-style: none">Visit Date: {{ x.tk_vdate }} Ticket Price:{{ x.tk_price }} Discount:{{ x.tk_discount }} </li>
         {% endfor %}
         {% endif %}
     {# if nothing, then display nothing found#}
