@@ -2,23 +2,17 @@
 
 {% block content %}
 
-<body>
+    <body>
 
-<h1>Payment</h1>
+    <h1>Payment</h1>
 
-<ul>
-{#go through the payment#}
-  {% for x in payment %}
-    <li>{{ x.pay_id }} {{ x.pay_method }} {{ x.pay_date }} {{ x.pay_amount }} {{ x.invoi }}</li>
+    <h2>Your order cost is {{ total_Amount }}</h2>
 
-{#      if nothing, then display nothing found#}
-  {% empty %}
-      <h2>Nothing found </h2>
-  {% endfor %}
-</ul>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
 
-<!-- <button type="submit"> <a href="pay.html"></a> payment </button> -->
-
-</body>
+    </body>
 
 {% endblock %}

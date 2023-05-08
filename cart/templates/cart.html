@@ -18,10 +18,6 @@
 
                 <button type="submit" class="btn btn-secondary btn-danger" name='delete-membership'>Delete</button>
                 <br>
-                {#    <form method="post">#}
-                {#{% csrf_token %}#}
-{#                        <input type="submit" class="btn btn-secondary btn-danger" name='delete-membership' value="Delete">#}
-                {#    </form>#}
 
             {% endif %}
 
@@ -30,10 +26,6 @@
                 {% for x in mytickets %}
                     <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }}</li>
                 {% endfor %}
-                {#    <form method="post">#}
-{#                        {% csrf_token %}#}
-                {#        <input type="submit" class="btn btn-secondary btn-danger"  name='delete-tickets' value="Delete">#}
-                {#    </form>#}
                 <button type="submit" class="btn btn-secondary btn-danger" name='delete-tickets'>Delete</button>
                 <br>
             {% endif %}
@@ -44,11 +36,17 @@
                     <li style="list-style: none">{{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
                 {% endfor %}
                 <li style="list-style: none">Total price for shows: ${{ show_price }}</li>
-                {#    <form method="post">#}
-{#                        {% csrf_token %}#}
-                {#        <input type="submit" class="btn btn-secondary btn-danger" name='delete-shows' value="Delete">#}
-                {#    </form>#}
                 <button type="submit" class="btn btn-secondary btn-danger" name='delete-shows'>Delete</button>
+                <br>
+            {% endif %}
+
+            {% if order_count  != 0 %}
+                <h3>Store orders</h3>
+                {% for x in mystore %}
+                    <li style="list-style: none">'{{ x.st.st_name }}' price: ${{ x.it.it_uprice }}</li>
+                {% endfor %}
+{#                <li style="list-style: none">Total price for store orders: ${{ store_price }}</li>#}
+                <button type="submit" class="btn btn-secondary btn-danger" name='delete-stores'>Delete</button>
                 <br>
             {% endif %}
 

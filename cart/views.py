@@ -49,7 +49,13 @@ def cart(request):
 
     # stores
     mystore = JlsOrder.objects.filter(v_id=visitor.v_id)
+    order_count = JlsOrder.objects.filter(v_id=visitor.v_id).count()
 
+    store_totalprice = 0
+    if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor, invoi_type='Stores')) > 0:
+        store = JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor,
+                                                  invoi_type='Stores').first()
+        store_totalprice = store.invoi_amount
 
     context = {
         'mytickets': mytickets,
@@ -61,6 +67,9 @@ def cart(request):
         'show_price': show_totalprice,
         'myparking': myparking,
         'parking_count': parking_count,
+        'mystore': mystore,
+        'order_count': order_count,
+        'store_price': store_totalprice,
 
     }
 
@@ -96,6 +105,9 @@ def cart(request):
             #     obj.delete()
             return redirect(reverse('cart'))
 
+        elif 'delete-stores' in request.POST:
+            JlsInvoi.objects.filter(jlsorder__v=visitor, invoi_date=date.today(), invoi_type='Stores').delete()
+            return redirect(reverse('cart'))
         # return HttpResponse(template.render(context, request))
     return HttpResponse(template.render(context, request))
 
