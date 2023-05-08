@@ -1,5 +1,7 @@
 from django.db import models
 
+from cart.models import JlsInvoi
+from visitor.models import JlsVisitors
 
 # Create your models here.
 
@@ -30,3 +32,16 @@ class JlsItems(models.Model):
         db_table = 'jls_items'
 
 
+class JlsOrder(models.Model):
+    order_id = models.AutoField(primary_key=True, db_comment='Order ID for store items.')  # The composite primary key (order_id, v_id) found, that is not supported. The first column is selected.
+    order_date = models.DateTimeField(db_comment='Order date fore stores. ')
+    order_quant = models.SmallIntegerField(db_comment='Invoice quant for stores. ')
+    v = models.ForeignKey(JlsVisitors, models.DO_NOTHING)
+    st = models.ForeignKey(JlsStores, models.DO_NOTHING)
+    it = models.ForeignKey(JlsItems, models.DO_NOTHING)
+    invoi = models.ForeignKey(JlsInvoi, models.CASCADE, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'jls_order'
+        # unique_together = (('order_id', 'v'),)

@@ -7,10 +7,14 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView
+from django.utils import timezone
 
-from .models import JlsStores, JlsItems
+from datetime import datetime, date
+
+from .models import JlsStores, JlsItems, JlsOrder
 from visitor.models import JlsVisitors
 from cart.models import JlsInvoi
+from payment.models import JlsPay
 
 
 class StoreViewCreate(LoginRequiredMixin, CreateView):
@@ -47,6 +51,51 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
             }
         return context
 
+    def post(self, request, *args, **kwargs):
+        current_user_id = self.request.user.id
+        visitor = JlsVisitors.objects.get(user_id=current_user_id)
+        store_id = self.kwargs['store_id']
+        item_id = request.POST.get('item_id')
+        quantity = int(request.POST.get('quantity'))
+
+        # Add the item to cart (order table)
+        self.add_to_cart(visitor.v_id, store_id, item_id, quantity)
+
+        return redirect(reverse('store_items', args=[store_id]))
+    
+    def add_to_cart(self, v_id, store_id, item_id, quantity):
+        item = JlsItems.objects.get(pk=item_id)
+
+        new_item = JlsOrder()
+        new_item.order_date = timezone.now()
+        new_item.order_quant = quantity
+        new_item.it_id = item.it_id
+        new_item.st_id = store_id
+        new_item.v_id = v_id
+        new_item.save()
+
+        all_invoice = JlsInvoi.objects.all()
+        in_st_today = all_invoice.filter(invoi_date=date.today(), invoi_type='Stores')
+        print(len(in_st_today), date.today(), v_id)
+        # if there's a invoice for the order today
+        if len(in_st_today) != 0:
+            print('here')
+            invoi = in_st_today.first()
+            # if this order has not been paid
+            if JlsPay.objects.filter(invoi_id=invoi.invoi_id) != None:
+                new_item.invoi_id = invoi.invoi_id
+                invoi.invoi_amount += quantity*item.it_uprice
+                invoi.save()
+        else:
+            # create a new invoice when there's no invoice
+            temp = JlsInvoi.objects.create(
+                invoi_date = date.today(),
+                invoi_amount = quantity*item.it_uprice,
+                invoi_type = 'Stores'
+            )
+            temp.save()
+            new_item.invoi_id = temp.invoi_id
+
     # def form_valid(self, request, form):
     #     print('sljkdhfao;hurg')
     #     store_id = self.kwargs['store_id']
@@ -70,23 +119,6 @@ class ItemViewCreate(LoginRequiredMixin, CreateView):
 
     # return redirect(reverse('store_items', args=[store_id]))
 
-    def post(self, request, *args, **kwargs):
-        store_id = self.kwargs['store_id']
-
-        item_id = request.POST.get('item_id')
-        quantity = request.POST.get('quantity')
-        print('item id: ', item_id)
-        print('quantity: ', quantity)
-
-        # Get the item object
-        item = JlsItems.objects.get(pk=item_id)
-        print(item.it_id, item.it_name, item.it_uprice)
-
-        # Create a new cart item object
-        # cart_item = JlsCartItems(item=item, quantity=quantity)
-        # cart_item.save()
-
-        return redirect(reverse('store_items', args=[store_id]))
 
 # The store_items function retrieves the corresponding store from the database using the get_object_or_404 function
 # and filters the JlsItems queryset to only include items with the selected store

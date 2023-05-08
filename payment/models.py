@@ -14,7 +14,7 @@ from cart.models import JlsInvoi
 #         db_table = 'jls_invoi'
 
 class JlsPay(models.Model):
-    pay_id = models.IntegerField(primary_key=True, db_comment='Unique payment ID for the payment')
+    pay_id = models.AutoField(primary_key=True, db_comment='Unique payment ID for the payment')
     pay_method = models.CharField(max_length=8, db_comment='Payment method,CASH,CREDIT,DEBIT')
     pay_date = models.DateTimeField(db_comment='Payment date of the current payment')
     pay_amount = models.DecimalField(max_digits=3, decimal_places=2, db_comment='Payment amount of the current payment')
