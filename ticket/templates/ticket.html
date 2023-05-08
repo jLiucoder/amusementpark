@@ -2,40 +2,116 @@
 
 {% block content %}
 
+<style>
+    main {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    #ticket-info {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid gray;
+        border-radius: 5px;
+        width: 500px;
+        text-align: left;
+        padding: 20px;
+    }
+    .price-include {
+        margin: 0;
+    }
+    .price-note {
+        margin: 0;
+        font-size: 14px;
+    }
+    .mb-8 {
+        margin-bottom: 8px;
+    }
+    .note {
+        margin: 0;
+        font-size: 12px;
+        color: gray;
+        font-style: italic;
+    }
+    .ticket-form {
+        margin-top: 12px;
+        display: flex;
+        gap: 12px;
+    }
+    #start-date {
+        box-sizing: border-box;
+        height: 40px;
+    }
+    .btn {
+        height: 40px;
+    }
+    table {
+        width: 400px;
+    }
+    table th, table td {
+        text-align: center;
+    }
+    #tickets {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
 <body>
-
-<h1>Ticket</h1>
-<p>Starting at $60.00</p>
-<p>Price above includes</p>
-<p>Ticket: $50.00</p>
-<p>Fee: $10.00</p>
-<p>#No addtional fees for all attractions in the park.</p>
-<p>#Discount will be calculated automatically.</p>
-
-<ul>
-    {#go through the cart#}
-    {% if ticket_count  != 0%}
-        <h3>Your Tickets</h3>
-        {% for x in myticket %}
-        <li>Visit Date: {{ x.tk_vdate }} Ticket Price:{{ x.tk_price }} Discount:{{ x.tk_discount }} </li>
-        {% endfor %}
-        {% endif %}
-    {# if nothing, then display nothing found#}
-    
-    {% comment %} <h2>Nothing found </h2> {% endcomment %}
-    
-</ul>
-
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <!-- <input type="submit" value="Create" /> -->
-    <input type="date" id="start" name="visit date">
-    <button class="btn btn-secondary" type="submit" name="add_ticket">Add Ticket</button>
-    <button class="btn btn-danger" type="submit" name="delete_ticket">Delete Ticket</button>
-</form>
-{% include 'messages.html' %}
-
+    <main>
+        <div id='ticket-info'>
+            <h1>Ticket</h1>
+            <p>Starting at $60.00</p>
+            <p class='price-include'>Price above includes</p>
+            <p class='price-note'>Ticket: $50.00</p>
+            <p class='price-note mb-8'>Fee: $10.00</p>
+            <p class='note'>#No addtional fees for all attractions in the park.</p>
+            <p class='note'>#Discount will be calculated automatically.</p>
+            <form class='ticket-form' action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <!-- <input type="submit" value="Create" /> -->
+                <input type="date" id="start-date" name="visit date" />
+                <button class="btn btn-secondary" type="submit" name="add_ticket">Add Ticket</button>
+                <button class="btn btn-danger" type="submit" name="delete_ticket">Delete Ticket</button>
+            </form>
+            {% include 'messages.html' %}
+        </div>
+        <div id='tickets'>
+            {#go through the cart#}
+            <h3>Your Tickets</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Visit Date</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                        </tr>
+                    </thead>
+                    {% if ticket_count  != 0%}
+                        <tbody>
+                            {% for x in myticket %}
+                                <tr>
+                                    <td>{{ x.tk_vdate }}</td>
+                                    <td>{{ x.tk_price }}</td>
+                                    <td>{{ x.tk_discount }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% endif %}
+                </table>
+            {# if nothing, then display nothing found#}
+            
+            {% comment %} <h2>Nothing found </h2> {% endcomment %}
+            
+        </div>
+    </main>
 </body>
 
 {% endblock %}
+
+
+
+
+{% comment %} visit date|ticket price|Discount
+May/03    | 60         |0.2
+May/26    | 60         |0.2 {% endcomment %}

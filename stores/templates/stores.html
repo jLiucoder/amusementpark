@@ -17,6 +17,8 @@
             margin-bottom: 50px;
             padding-top: 30px;
             padding-bottom: 50px;
+            display: flex;
+            justify-content: center;
         }
         .card-img-top{
             width: 480px;
@@ -40,7 +42,7 @@
             </div>
             <div class="card-body">
                 <form action="{% url 'store_items' store.st_id %}" method="GET" style="display:inline;">
-                    <button type="submit">Go to store</button>
+                    <button type="submit" class="btn btn-secondary">Go to store</button>
                 </form>
                 {# <a href="{% url 'store_items' store.st_id %}"><button>Go to Store</button></a>#}
             </div>

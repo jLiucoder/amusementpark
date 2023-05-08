@@ -19,7 +19,26 @@
             padding-top: 30px;
             padding-bottom: 50px;
         }
-
+        .card {
+            height: 450px;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .item-price {
+            margin-top: auto;
+        }
+        .quantity {
+            display: flex;
+            justify-content: center;
+        }
+        .quantity__input {
+            width: 80px;
+            height: 30px;
+            padding: 4px;
+            margin-right: 4px;
+        }
     </style>
 
 </head>
@@ -36,9 +55,9 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ x.it_name }}</h5>
                     <p class="card-text">{{ x.it_des }}</p>
-                    <p class="card-text">Price: {{ x.it_uprice }}</p>
+                    <p class="card-text item-price">Price: {{ x.it_uprice }}</p>
                 </div>
-                <quantity-input class="quantity">
+                <div class="quantity">
                     <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="item_id" value="{{ x.it_id }}">
@@ -47,7 +66,7 @@
                         <!-- <button class="quantity__button no-js-hidden" name="plus" type="button">+</button> -->
                         <input type="submit" value="Add to Cart">
                     </form>
-                </quantity-input>
+                </div>
 
             </div>
         </div>

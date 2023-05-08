@@ -16,6 +16,8 @@
                 margin-bottom: auto;
                 padding-top: 30px;
                 padding-bottom: 50px;
+                display: flex;
+                justify-content: center;
             }
         </style>
 
@@ -37,7 +39,7 @@
             {% for x in myShows %}
                 <div class="col">
 
-                    <div class="card " style="width: 18rem;">
+                    <div class="card" style="min-height: 650px; width: 18rem;">
                         <img class="card-img-top" src={{ x.sh_link }} style="width:100%;height:15vw;object-fit:cover;" alt="">
                         <div class="card-body">
                             <h5 class="card-title">{{ x.sh_name }}</h5>
@@ -53,7 +55,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">price: ${{ x.sh_price }}</li>
                         </ul>
-                        <div class="card-body">
+                        <div class="card-footer" style="background-color: transparent;">
                             <form method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="show_id" value="{{ x.sh_id }}">
