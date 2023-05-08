@@ -61,10 +61,6 @@
                         Amount: ${{ x.pk_fee }} </li>
 
                 {% endfor %}
-                {#                <form method="post">#}
-                {#                    {% csrf_token %}#}
-                {#                    <input type="submit" class="btn btn-secondary btn-danger" value="Delete">#}
-                {#                </form>#}
                 <button type="submit" class="btn btn-secondary btn-danger" name='delete-parkings'>Delete</button>
                 <br>
             {% endif %}

@@ -16,6 +16,7 @@ from django.shortcuts import redirect, reverse, render
 @login_required(login_url='home')
 def cart(request):
     # getting the logged in current user
+
     current_user_id = request.user.id
     visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
     # template used
@@ -49,6 +50,7 @@ def cart(request):
     # stores
     mystore = JlsOrder.objects.filter(v_id=visitor.v_id)
 
+
     context = {
         'mytickets': mytickets,
         'ticket_count': ticket_count,
@@ -62,17 +64,7 @@ def cart(request):
 
     }
 
-    return HttpResponse(template.render(context, request))
-
-
-@login_required(login_url='home')
-def post(request):
-    template_name = 'cart.html'
-    current_user_id = request.user.id
-    visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
-    print(visitor.v_id)
-
-    if request.method == 'POST':
+    if request.method == "POST":
         data = request.POST
         print(data)
 
@@ -83,28 +75,41 @@ def post(request):
             JlsMember.objects.all().delete()
             visitor.refresh_from_db()
 
-            # return redirect(reverse('cart'))
+            return redirect(reverse('cart'))
 
         elif 'delete-tickets' in request.POST:
             print('tickets')
-            JlsInvoi.objects.filter(v_id=visitor.v_id, invoi_date=date.today(), invoi_type='Tickets').delete()
+            JlsInvoi.objects.filter(jlstickets__v=visitor, invoi_date=date.today(), invoi_type='Tickets').delete()
             # for obj in group:
             #     obj.delete()
-            # return redirect(reverse('cart'))
+            return redirect(reverse('cart'))
 
         elif 'delete-shows' in request.POST:
-            JlsInvoi.objects.filter(v_id=visitor.v_id, invoi_date=date.today(), invoi_type='Shows').delete()
+            JlsInvoi.objects.filter(jlsvsi__v=visitor, invoi_date=date.today(), invoi_type='Shows').delete()
             # for obj in group:
             #     obj.delete()
-            # return redirect(reverse('cart'))
+            return redirect(reverse('cart'))
 
         elif 'delete-parkings' in request.POST:
-            JlsInvoi.objects.filter(v_id=visitor.v_id, invoi_date=date.today(), invoi_type='Parkings').delete()
+            JlsInvoi.objects.filter(jlsparkings__v=visitor, invoi_date=date.today(), invoi_type='Parkings').delete()
             # for obj in group:
             #     obj.delete()
-            # return redirect(reverse('cart'))
+            return redirect(reverse('cart'))
 
-    return render(request, template_name)
+        # return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))
+
+
+# @login_required(login_url='home')
+# def post(request):
+#     template_name = 'cart.html'
+#     current_user_id = request.user.id
+#     visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
+#     print(visitor.v_id)
+#
+#
+#
+#     return render(request, template_name)
 
 @login_required(login_url='home')
 def pay(request):
