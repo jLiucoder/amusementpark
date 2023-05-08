@@ -36,6 +36,7 @@ class MemberViewCreate(LoginRequiredMixin, TemplateView):
         # change the visitor type to member
         current_user_id = self.request.user.id
         visitor = JlsVisitors.objects.filter(user_id=current_user_id).first()
+        print(visitor.v_id)
         visitor.v_type = 'M'
         visitor.save()
         # generate new member id and startdate, enddate and create new record in teh memebr table

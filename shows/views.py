@@ -1,14 +1,7 @@
 import decimal
-
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from datetime import date, timezone
-# Create your views here.
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.template import loader
-from django.views import View
-from django.views.generic import CreateView
+
 
 from .models import JlsShows, JlsVsi
 from cart.models import JlsInvoi

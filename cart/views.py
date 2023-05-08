@@ -35,9 +35,18 @@ def cart(request):
     # shows
     myvsi = JlsVsi.objects.filter(v_id=visitor.v_id)
     vsi_count = JlsVsi.objects.filter(v_id=visitor.v_id).count()
+    show_totalprice = 0
 
+    if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor, invoi_type='Shows')) > 0:
+        show_totalprice = JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor, invoi_type='Shows').first().invoi_amount
+
+    # parking
     myparking = JlsParkings.objects.filter(v_id=visitor.v_id)
     parking_count = JlsParkings.objects.filter(v_id=visitor.v_id).count()
+
+    # stores
+    # mystore =
+
 
     context = {
         'mytickets': mytickets,
@@ -46,7 +55,7 @@ def cart(request):
         'ifmem': ifmem,
         'myvsi': myvsi,
         'vsi_count': vsi_count,
-
+        'show_price': show_totalprice,
         'myparking': myparking,
         'parking_count': parking_count,
 

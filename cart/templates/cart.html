@@ -8,33 +8,56 @@
 
 <ul>
 {#go through the cart#}
-{% if ticket_count  != 0%}
-    <h3>Ticket</h3>
-  {% for x in mytickets %}
-    <li>Ticket method: {{ x.tk_method }} Purchase date: {{ x.tk_purdate }} Ticket price: {{ x.tk_price }}</li>
-  {% endfor %}
-{% endif %}
-
 {#membership#}
 {% if ifmem > 0 %}
     <h3>Membership</h3>
-    <li>Membership ID: {{ memnumber }} Price: $99</li>
+    <li style="list-style: none">Membership ID: {{ memnumber }} Price: $99</li>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
+    </form>
+{% endif %}
+
+{% if ticket_count  != 0%}
+    <h3>Tickets</h3>
+  {% for x in mytickets %}
+    <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }}</li>
+  {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
+    </form>
+    <br>
 {% endif %}
 
 {% if vsi_count  != 0%}
     <h3>Shows</h3>
   {% for x in myvsi %}
-    <li>Show name: {{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
+    <li style="list-style: none">{{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
   {% endfor %}
-    <h5>price for tickets: {{ myvsi.invoi.invoi_amount}}</h5>
+    <li style="list-style: none">Total price for shows: ${{ show_price}}</li>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
+    </form>
+    <br>
 {% endif %}
+
+
 
 {#parking#}
 {% if parking_count  != 0%}
     <h3>Parking</h3>
   {% for x in myparking %}
-    <li>Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount: ${{ x.pk_fee }} </li>
+    <li style="list-style: none">Reserved starting time: {{ x.pk_timein }} Ending time:{{ x.pk_timeout }} Amount: ${{ x.pk_fee }} </li>
+
   {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary btn-danger" value="Delete">
+    </form>
+    <br>
 {% endif %}
 
 
