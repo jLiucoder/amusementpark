@@ -1,5 +1,7 @@
 from django.db import models
 from cart.models import JlsInvoi
+
+
 # Create your models here.
 
 # class JlsInvoi(models.Model):
@@ -16,10 +18,22 @@ from cart.models import JlsInvoi
 class JlsPay(models.Model):
     pay_id = models.AutoField(primary_key=True, db_comment='Unique payment ID for the payment')
     pay_method = models.CharField(max_length=8, db_comment='Payment method,CASH,CREDIT,DEBIT')
-    pay_date = models.DateTimeField(db_comment='Payment date of the current payment')
+    pay_date = models.DateField(db_comment='Payment date of the current payment')
     pay_amount = models.DecimalField(max_digits=3, decimal_places=2, db_comment='Payment amount of the current payment')
     invoi = models.ForeignKey(JlsInvoi, models.DO_NOTHING)
 
     class Meta:
-
         db_table = 'jls_pay'
+
+
+class JlsCard(models.Model):
+    pay = models.OneToOneField('JlsPay', models.DO_NOTHING, primary_key=True,
+                               db_comment='Unique payment ID for the payment')
+    crd_fname = models.CharField(max_length=10, db_comment='card holder firstname.. ')
+    crd_lname = models.CharField(max_length=10, db_comment='Card holder lastname ')
+    crd_num = models.CharField(max_length=16, db_comment='Card number ')
+    crd_edate = models.DateField(db_comment='Experition date of the card ')
+    crd_cvv = models.CharField(max_length=3, db_comment='CVV of card')
+
+    class Meta:
+        db_table = 'jls_card'
