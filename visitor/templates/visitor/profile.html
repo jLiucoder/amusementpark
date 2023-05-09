@@ -1,25 +1,73 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
+<style>
+    #profile {
+        width: 75%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+    .info-block {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-top: 12px;
+    }
+    .info-title {
+        font-size: 12px;
+        color: gray;
+    }
+    .info-data {
+        margin-top: 4px;
+        font-size: 16px;
+        color: #114050;
+    }
+</style>
     <h1> {{ curr.username }}'s Profile</h1>
-
-    <h2> Name:{{ curruser.v_fname }} {{ curruser.v_lname }}</h2>
-
-    <h2> Email:{{ curruser.v_email }}</h2>
-
-    <h2> State:{{ curruser.v_state }}</h2>
-
-    <h2> Phone#:{{ curruser.v_phone}}</h2>
-
-    <h2> Date of Birth:{{ curruser.v_dob}}</h2>
-
-    {% if curruser.v_type == 'M' %}
-    <h2> Membership ID: {{ member.mem_id }}</h2>
-
-    <h2> Membership Starting date: {{ member.mem_sdate }}</h2>
-
-    <h2> Membership Ending date: {{ member.mem_edate }}</h2>
-    {% endif %}
-
+    <div id='profile'>
+        <div class='info-block'>
+            <div class='info-title'>Visitor ID</div>
+            <div class='info-data'>{{ curruser.v_id }}</div>
+        </div>
+        <div class='info-block'></div>
+        <div class='info-block'>
+            <div class='info-title'>First Name</div>
+            <div class='info-data'>{{ curruser.v_fname }}</div>
+        </div>
+        <div class='info-block'>
+            <div class='info-title'>Last Name</div>
+            <div class='info-data'>{{ curruser.v_lname }}</div>
+        </div>
+        <div class='info-block'>
+            <div class='info-title'>Email</div>
+            <div class='info-data'>{{ curruser.v_email }}</div>
+        </div>
+        <div class='info-block'>
+            <div class='info-title'>State</div>
+            <div class='info-data'>{{ curruser.v_state }}</div>
+        </div>
+        <div class='info-block'>
+            <div class='info-title'>Phone</div>
+            <div class='info-data'>{{ curruser.v_phone }}</div>
+        </div>
+        <div class='info-block'>
+            <div class='info-title'>Date of Birth</div>
+            <div class='info-data'>{{ curruser.v_dob }}</div>
+        </div>
+        {% if curruser.v_type == 'M' %}
+            <div class='info-block'>
+                <div class='info-title'>Membership ID</div>
+                <div class='info-data'>{{ member.mem_id }}</div>
+            </div>
+            <div class='info-block'>
+                <div class='info-title'>Membership Starting date</div>
+                <div class='info-data'>{{ member.mem_sdate }}</div>
+            </div>
+            <div class='info-block'>
+                <div class='info-title'>Membership Ending date</div>
+                <div class='info-data'>{{ member.mem_edate }}</div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
