@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 
 from django.forms import fields
 
-from .models import JlsPay, JlsCard
+from .models import JlsPay
 
 CARDTYPE = [
     ('CREDIT', 'credit'),
@@ -18,20 +18,12 @@ class PaymentInfoForm(forms.ModelForm):
     class Meta:
         model = JlsPay
         fields = (
-            'pay_method', 'pay_date',)
+            'pay_method','crd_fname', 'crd_lname', 'crd_num', 'crd_edate', 'crd_cvv')
         widgets = {
             'pay_method': forms.Select(choices=CARDTYPE),
-            'pay_date': forms.widgets.DateInput(attrs={'type': 'date'})
-        }
-
-
-class CardInputForm(UserCreationForm):
-    class Meta:
-        model = JlsCard
-        fields = ('crd_fname', 'crd_lname', 'crd_num', 'crd_edate', 'crd_cvv')
-
-        widgets = {
             'crd_edate': forms.widgets.DateInput(attrs={'type': 'date'}),
-            'crd_type': forms.Select(choices=CARDTYPE)
         }
+
+
+
 
