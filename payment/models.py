@@ -36,7 +36,7 @@ class JlsPay(models.Model):
 class JlsSummary(models.Model):
     v_id = models.IntegerField(primary_key=True,
                                db_comment='Visitor ID. ')  # The composite primary key (v_id, v_date) found, that is not supported. The first column is selected.
-    v_date = models.DateTimeField(db_comment='Visiting date. ')
+    v_date = models.DateField(db_comment='Visiting date. ')
     amount = models.IntegerField(db_comment='amount.')
     source = models.CharField(max_length=10, db_comment='source')
     source_id = models.IntegerField(db_comment='source ID.')
