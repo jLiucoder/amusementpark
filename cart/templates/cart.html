@@ -24,7 +24,7 @@
             {% if ticket_count  != 0 %}
                 <h3>Tickets</h3>
                 {% for x in mytickets %}
-                    <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }}</li>
+                    <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }} Discount: {{ x.tk_discount}}</li>
                 {% endfor %}
                 <button type="submit" class="btn btn-secondary btn-danger" name='delete-tickets'>Delete</button>
                 <br>
@@ -43,7 +43,7 @@
             {% if order_count  != 0 %}
                 <h3>Store orders</h3>
                 {% for x in mystore %}
-                    <li style="list-style: none">'{{ x.st.st_name }}' price: ${{ x.it.it_uprice }}</li>
+                    <li style="list-style: none">'{{ x.it.it_name }}' price: ${{ x.it.it_uprice }}</li>
                 {% endfor %}
 {#                <li style="list-style: none">Total price for store orders: ${{ store_price }}</li>#}
                 <button type="submit" class="btn btn-secondary btn-danger" name='delete-stores'>Delete</button>

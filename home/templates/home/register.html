@@ -1,12 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'base-home.html' %}
 
 {% block content %}
+<style>
+    .signup {
+        color: #ffffff;
+        font-family: monospace, monospace;
+    }
+    .btn {
+        border: 2px solid #ffff66;
+        border-radius: 2px;
+        background: none;
+        font-size: 14px;
+        color: #fff;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
 
+<div class="signup">
     <form method="POST" style="text-align: left; margin: 0 auto; width: 600px">{% csrf_token %}
-
         {{ form.as_p }}
-
-        <input class="btn btn-secondary" type = 'submit' name = 'Submit'>
+        <input class="btn" type = 'submit' name = 'Submit'>
     </form>
+</div>
 
 {% endblock %}
