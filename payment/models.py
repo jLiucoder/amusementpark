@@ -34,14 +34,17 @@ class JlsPay(models.Model):
 
 
 class JlsSummary(models.Model):
-    s_id = models.AutoField(primary_key= True, db_comment='summary pk')
-    v_id = models.IntegerField(
+    s_id = models.AutoField("summary pk", primary_key=True, db_comment='summary pk')
+    v_id = models.IntegerField("Visitor ID",
                                db_comment='Visitor ID. ')  # The composite primary key (v_id, v_date) found, that is not supported. The first column is selected.
-    v_date = models.DateField(db_comment='Visiting date. ')
-    amount = models.IntegerField(db_comment='amount.')
-    source = models.CharField(max_length=10, db_comment='source')
-    source_id = models.IntegerField(db_comment='source ID.')
+    v_date = models.DateField("Visiting date", db_comment='Visiting date. ')
+    amount = models.IntegerField("Amount", db_comment='amount.')
+    source = models.CharField("Source", max_length=10, db_comment='source')
+    source_id = models.IntegerField("Source ID", db_comment='source ID.')
 
     class Meta:
         db_table = 'jls_summary'
-#         # unique_together = (('v_id', 'v_date', 'source_id'),)
+        ordering = ("s_id", "v_id", "v_date", "amount", "source", "source_id")
+
+    def __str__(self):
+        return f"{self.s_id}, {self.v_id}, {self.v_date}, {self.amount}, {self.source}, {self.source_id}"

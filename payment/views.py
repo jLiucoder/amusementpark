@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views import View
 
 from cart.models import JlsInvoi
-from visitor.models import JlsVisitors
+from visitor.models import JlsVisitors, JlsMember
 from .models import JlsPay
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -56,6 +56,9 @@ class PaymentView(LoginRequiredMixin, CreateView):
     # transaction used here
     def form_valid(self, form):
 
+        current_user = self.request.user
+        visitor = JlsVisitors.objects.filter(v_id=current_user.id).first()
+
         method = form.cleaned_data['pay_method']
         edate = form.cleaned_data['crd_edate']
         cvv = form.cleaned_data['crd_cvv']
@@ -80,6 +83,10 @@ class PaymentView(LoginRequiredMixin, CreateView):
         )
         tempPay.save()
         JlsInvoi.objects.all().delete()
+
+        # if visitor.
+        #     JlsMember.objects.get(v_id= visitor.v_id).delete()
+        #     visitor.
         return redirect('paysuccess')
 
 
