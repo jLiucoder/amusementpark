@@ -32,14 +32,15 @@ class JlsPay(models.Model):
     class Meta:
         db_table = 'jls_pay'
 
-# class JlsCard(models.Model):
-#     pay = models.OneToOneField('JlsPay', models.DO_NOTHING, primary_key=True,
-#                                db_comment='Unique payment ID for the payment')
-#     crd_fname = models.CharField(max_length=10, db_comment='card holder firstname.. ')
-#     crd_lname = models.CharField(max_length=10, db_comment='Card holder lastname ')
-#     crd_num = models.CharField(max_length=16, db_comment='Card number ')
-#     crd_edate = models.DateField(db_comment='Experition date of the card ')
-#     crd_cvv = models.CharField(max_length=3, db_comment='CVV of card')
-#
-#     class Meta:
-#         db_table = 'jls_card'
+
+class JlsSummary(models.Model):
+    v_id = models.IntegerField(primary_key=True,
+                               db_comment='Visitor ID. ')  # The composite primary key (v_id, v_date) found, that is not supported. The first column is selected.
+    v_date = models.DateTimeField(db_comment='Visiting date. ')
+    amount = models.IntegerField(db_comment='amount.')
+    source = models.CharField(max_length=10, db_comment='source')
+    source_id = models.IntegerField(db_comment='source ID.')
+
+    class Meta:
+        db_table = 'jls_summary'
+        unique_together = (('v_id', 'v_date'),)

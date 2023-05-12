@@ -15,6 +15,6 @@
 
   
 * Other folders and files
-  * models.py: has the whole django design models from inpectdb command 
+  * models.py: has the whole django design models from django inpectdb command
   * requirements.txt: has all the dependencies needed for running the project
   * /static: has the stylesheet, some image and a base template for all the html templates used
