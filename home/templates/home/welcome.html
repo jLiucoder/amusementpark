@@ -34,11 +34,15 @@
         text-transform: none;
         letter-spacing: .10em;
     }
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
     .btn {
-        margin: 0 auto;
         width: 170px;
         height: 60px;
-        padding: 6px 0 0 3px;
+        {% comment %} padding: 6px 0 0 3px; {% endcomment %}
         border: 2px solid #ffff66;
         border-radius: 2px;
         background: none;
@@ -48,11 +52,14 @@
         text-decoration: none;
         font-weight: 600;
         text-transform: uppercase;
-        vertical-align: middle;
+        {% comment %} vertical-align: middle; {% endcomment %}
         text-align: center;
         appearance: none;
         transition: background .4s, color .4s;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .btn:hover {
         background: #ffff66;
@@ -73,8 +80,8 @@
         </div>
         <div class="buttons">
             {% comment %} insert links here for membership page and group page {% endcomment %}
-            <a href="{% url 'memberships' %}" class="btn">Membership</a>
-            <a href="{% url 'groups' %}" class="btn">Here with a group?</a>
+            <a href="{% url 'memberships' %}" class="btn"><div>Membership</div></a>
+            <a href="{% url 'groups' %}" class="btn"><div>Here with a group?</div></a>
         </div>
         {% endif %}
     </div>

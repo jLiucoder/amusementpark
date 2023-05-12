@@ -3,68 +3,175 @@
 {% block content %}
 
     <body>
+        <style>
+            #cart {
+                width: 60%;
+                margin: 0 auto;
+            }
+            .cart-item {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 12px;
+            }
+            .cart-item:first-child {
+                border-bottom: 1px solid gray;
+            }
+            .cart-item:last-child {
+                border-top: 1px solid gray;
+            }
+            .cart-item .item-header {
+                {% comment %} margin-bottom: 8px; {% endcomment %}
+                width: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+            .cart-item .item-footer {
+                margin-top: 4px;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+            h3 {
+                margin: 0;
+            }
+            .item {
+                width: 100%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                font-family: Lucida Console;
+                font-size: 18px;
+            }
+            .item > .item-name {
+                width: 50%;
+                text-align: left;
+            }
+            .item > .quantity{
+                width: 20%;
+                text-align: right;
+            }
+            .item > .price {
+                width: 20%;
+                text-align: right;
+            }
+        </style>
 
-    <h1>Cart</h1>
+    {% comment %} <h1>Cart</h1> {% endcomment %}
     <form method="POST">
         {% csrf_token %}
 
-        <ul>
-            {#go through the cart#}
-            {#membership#}
+        <div id="cart">
+            <div class='cart-item'>
+                <div class="item">
+                    <div class='item-name'></div>
+                    <div class='quantity'>Quantity</div>
+                    <div class='price'>Amount</div>
+                </div>
+            </div>
+            {% comment %} go through the cart {% endcomment %}
+            {% comment %} membership {% endcomment %}
 
             {% if ifmem > 0 %}
-                <h3>Membership</h3>
-                <li style="list-style: none">Membership ID: {{ memnumber }} Price: $99</li>
-
-                <button type="submit" class="btn btn-secondary btn-danger" name='delete-membership'>Delete</button>
-                <br>
-
+            <div class='cart-item'>
+                <div class='item-header'>
+                    <h3>Membership</h3>
+                </div>
+                <div class="item">
+                    <div class='item-name'>Membership ID: {{ memnumber }}</div>
+                    <div class='quantity'>1</div>
+                    <div class='price'>$99</div>
+                </div>
+                <div class='item-footer'>
+                    <button type="submit" class="btn btn-secondary btn-danger btn-sm" name='delete-membership'>Delete</button>
+                </div>
+            </div>
             {% endif %}
 
             {% if ticket_count  != 0 %}
-                <h3>Tickets</h3>
+            <div class='cart-item'>
+                <div class='item-header'>
+                    <h3>Tickets</h3>
+                </div>
                 {% for x in mytickets %}
-                    <li style="list-style: none">Purchase date: {{ x.tk_purdate }} Ticket price: ${{ x.tk_price }} Discount: {{ x.tk_discount}}</li>
+                    <div class="item">
+                        <div class='item-name'>Visit date: {{ x.tk_vdate }}</div>
+                        <div class='quantity'>1</div>
+                        <div class='price'>${{ x.tk_price }}</div>
+                    </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-secondary btn-danger" name='delete-tickets'>Delete</button>
-                <br>
+                <div class='item-footer'>
+                    <button type="submit" class="btn btn-secondary btn-danger btn-sm" name='delete-tickets'>Delete</button>
+                </div>
+            </div>
             {% endif %}
 
             {% if vsi_count  != 0 %}
-                <h3>Shows</h3>
+            <div class='cart-item'>
+                <div class='item-header'>
+                    <h3>Shows</h3>
+                </div>
                 {% for x in myvsi %}
-                    <li style="list-style: none">{{ x.sh.sh_name }} quantity: {{ x.vsi_quant }}</li>
+                    <div class="item">
+                        <div class='item-name'>{{ x.sh.sh_name }}</div>
+                        <div class='quantity'>{{ x.vsi_quant }}</div>
+                        <div class='price'>${{ show_unit }}</div>
+                    </div>
                 {% endfor %}
-                <li style="list-style: none">Total price for shows: ${{ show_price }}</li>
-                <button type="submit" class="btn btn-secondary btn-danger" name='delete-shows'>Delete</button>
-                <br>
+                <div class='item-footer'>
+                    <button type="submit" class="btn btn-secondary btn-danger btn-sm" name='delete-shows'>Delete</button>
+                </div>
+            </div>
             {% endif %}
 
             {% if order_count  != 0 %}
-                <h3>Store orders</h3>
+            <div class='cart-item'>
+                <div class='item-header'>
+                    <h3>Store orders</h3>   
+                </div>
                 {% for x in mystore %}
-                    <li style="list-style: none">'{{ x.it.it_name }}' price: ${{ x.it.it_uprice }}</li>
+                    <div class="item">
+                        <div class='item-name'>{{ x.it.it_name }}</div>
+                        <div class='quantity'>{{x.order_quant}}</div>
+                        <div class='price'>${{ x.it.it_uprice }}</div>
+                    </div>
                 {% endfor %}
-{#                <li style="list-style: none">Total price for store orders: ${{ store_price }}</li>#}
-                <button type="submit" class="btn btn-secondary btn-danger" name='delete-stores'>Delete</button>
-                <br>
+                <div class='item-footer'>
+                    <button type="submit" class="btn btn-secondary btn-danger btn-sm" name='delete-stores'>Delete</button>
+                </div>
+            </div>
             {% endif %}
 
-            {#parking#}
+            {% comment %} parking {% endcomment %}
             {% if parking_count  != 0 %}
-                <h3>Parking</h3>
+            <div class='cart-item'>
+                <div class='item-header'>
+                    <h3>Parking</h3>
+                </div>
                 {% for x in myparking %}
-                    <li style="list-style: none">Reserved starting time: {{ x.pk_timein }} Ending
-                        time:{{ x.pk_timeout }}
-                        Amount: ${{ x.pk_fee }} </li>
-
+                    <div class="item">
+                        <div class='item-name'>{{ x.pk_timein }} ~ {{ x.pk_timeout }}</div>
+                        <div class='quantity'>1</div>
+                        <div class='price'>${{ x.pk_fee }}</div>
+                    </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-secondary btn-danger" name='delete-parkings'>Delete</button>
-                <br>
+                <div class='item-footer'>
+                    <button type="submit" class="btn btn-secondary btn-danger btn-sm" name='delete-parkings'>Delete</button>
+                </div>
+            </div>
             {% endif %}
 
-
-        </ul>
+            <div class='cart-item'>
+                <div class="item">
+                    <div class='item-name'>Total</div>
+                    <div class='quantity'></div>
+                    <div class='price'>${{ total_price }}</div>
+                </div>
+            </div>
+        </div>
     </form>
     <a href="{% url 'pay' %}">
         <button type="button" class="btn btn-primary">Payment</button>

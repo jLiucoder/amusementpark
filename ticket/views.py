@@ -41,9 +41,6 @@ class TicketView(LoginRequiredMixin, View):
             if age >= 60 or age < 7:
                 discount += 0.15
         return discount
-
-    def calculatePrice(self, price, discount):
-        return price*(1-discount)
     
     def get(self, request):
         template = loader.get_template(self.template_name)
@@ -80,20 +77,26 @@ class TicketView(LoginRequiredMixin, View):
                     new_tk = JlsTickets()
                     new_tk.v_id = visitor.v_id
                     new_tk.tk_method = 'OL'
-                    new_tk.tk_purdate = timezone.now()
+                    new_tk.tk_purdate = date.today()
                     new_tk.tk_vdate = vdate
-                    new_tk.tk_price = 60 # store the original price or price after discount?
                     new_tk.tk_discount = self.calculateDiscount(new_tk.tk_method, vdate, visitor)
+                    new_tk.tk_price = 60*(1-new_tk.tk_discount)
                     new_tk.save()
                     messages.success(request, 'Successfully added')
 
                     # create a new invoice with the ticket, when there's no invoice
-                    temp = JlsInvoi.objects.create(
-                        invoi_date=date.today(),
-                        invoi_amount=self.calculatePrice(new_tk.tk_price, new_tk.tk_discount),
-                        invoi_type='Tickets'
-                    )
-                    temp.save()
+                    if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlstickets__v=visitor, invoi_type='Tickets')) == 0:
+                        temp = JlsInvoi.objects.create(
+                            invoi_date = date.today(),
+                            invoi_amount = new_tk.tk_price,
+                            invoi_type = 'Tickets'
+                        )
+                        temp.save()
+                    # add the ticket price to invoive
+                    else:
+                        temp = JlsInvoi.objects.get(invoi_date=date.today(), jlstickets__v=visitor, invoi_type='Tickets')
+                        temp.invoi_amount += new_tk.tk_price
+                        temp.save()
 
                     # use the newly create invoice id to fill in the ticket invoice id
                     new_tk.invoi_id = temp.invoi_id

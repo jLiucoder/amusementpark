@@ -15,20 +15,20 @@
         margin-top: 12px;
     }
     .info-title {
-        font-size: 12px;
+        font-size: 16px;
         color: gray;
     }
     .info-data {
         margin-top: 4px;
-        font-size: 16px;
+        font-size: 20px;
         color: #114050;
     }
 </style>
     <h1> {{ curr.username }}'s Profile</h1>
     <div id='profile'>
         <div class='info-block'>
-            <div class='info-title'>Visitor ID</div>
-            <div class='info-data'>{{ curruser.v_id }}</div>
+            <div class='info-title'></div>
+            <div class='info-data'></div>
         </div>
         <div class='info-block'></div>
         <div class='info-block'>
@@ -61,12 +61,8 @@
                 <div class='info-data'>{{ member.mem_id }}</div>
             </div>
             <div class='info-block'>
-                <div class='info-title'>Membership Starting date</div>
-                <div class='info-data'>{{ member.mem_sdate }}</div>
-            </div>
-            <div class='info-block'>
-                <div class='info-title'>Membership Ending date</div>
-                <div class='info-data'>{{ member.mem_edate }}</div>
+                <div class='info-title'>Membership</div>
+                <div class='info-data'>{{ member.mem_sdate }} - {{ member.mem_edate }}</div>
             </div>
         {% endif %}
     </div>

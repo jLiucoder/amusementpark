@@ -23,54 +23,76 @@ def cart(request):
     template = loader.get_template('cart.html')
 
     # tickets
-    mytickets = JlsTickets.objects.filter(v_id=visitor.v_id)
+    mytickets = JlsTickets.objects.filter(v_id=visitor.v_id, tk_purdate=date.today())
     ticket_count = JlsTickets.objects.filter(v_id=visitor.v_id).count()
     # not done yet not sure what to do
-    ticketfee = JlsTickets.objects.filter(v_id=visitor.v_id)
+    ticket_totalprice = 0
+    if len(mytickets) > 0:
+        ticket_totalprice = JlsInvoi.objects.filter(invoi_date=date.today(), jlstickets__v=visitor,
+                                                  invoi_type='Tickets').first().invoi_amount
 
     # membership
     mem_number = 0
-    if len(JlsMember.objects.filter(v_id=visitor.v_id, )) > 0:
+    mem_price = 0
+    ifmem = len(JlsMember.objects.filter(v_id=visitor.v_id))
+    if ifmem > 0:
         mem_number = JlsMember.objects.get(v_id=visitor.v_id).mem_id
-    ifmem = len(JlsMember.objects.filter(v_id=visitor.v_id, ))
+        mem_price = 99
 
     # shows
     myvsi = JlsVsi.objects.filter(v_id=visitor.v_id)
     vsi_count = JlsVsi.objects.filter(v_id=visitor.v_id).count()
+    show_unitprice = 0
     show_totalprice = 0
 
     if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor, invoi_type='Shows')) > 0:
         show_totalprice = JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor,
                                                   invoi_type='Shows').first().invoi_amount
+        show_unitprice = int(show_totalprice/vsi_count)
 
     # parking
     myparking = JlsParkings.objects.filter(v_id=visitor.v_id)
     parking_count = JlsParkings.objects.filter(v_id=visitor.v_id).count()
+
+    parking_totalprice = 0
+    if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlsparkings__v=visitor, invoi_type='Parkings')) > 0:
+        store = JlsInvoi.objects.filter(invoi_date=date.today(), jlsparkings__v=visitor, invoi_type='Parkings').first()
+        parking_totalprice = store.invoi_amount
 
     # stores
     mystore = JlsOrder.objects.filter(v_id=visitor.v_id)
     order_count = JlsOrder.objects.filter(v_id=visitor.v_id).count()
 
     store_totalprice = 0
-    if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor, invoi_type='Stores')) > 0:
-        store = JlsInvoi.objects.filter(invoi_date=date.today(), jlsvsi__v=visitor,
-                                                  invoi_type='Stores').first()
+    if len(JlsInvoi.objects.filter(invoi_date=date.today(), jlsorder__v=visitor, invoi_type='Stores')) > 0:
+        store = JlsInvoi.objects.filter(invoi_date=date.today(), jlsorder__v=visitor, invoi_type='Stores').first()
         store_totalprice = store.invoi_amount
+    
+    total_price = mem_price+ticket_totalprice+show_totalprice+store_totalprice+parking_totalprice
 
     context = {
         'mytickets': mytickets,
         'ticket_count': ticket_count,
+        'ticket_price': ticket_totalprice,
+
         'memnumber': mem_number,
         'ifmem': ifmem,
+        'mem_price': mem_price,
+
         'myvsi': myvsi,
         'vsi_count': vsi_count,
+        'show_unit':show_unitprice,
         'show_price': show_totalprice,
+
         'myparking': myparking,
         'parking_count': parking_count,
+        'parking_price': parking_totalprice,
+
         'mystore': mystore,
         'order_count': order_count,
         'store_price': store_totalprice,
 
+        'total_price':total_price,
     }
 
     if request.method == "POST":
