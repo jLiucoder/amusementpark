@@ -34,7 +34,8 @@ class JlsPay(models.Model):
 
 
 class JlsSummary(models.Model):
-    v_id = models.IntegerField(primary_key=True,
+    s_id = models.AutoField(primary_key= True, db_comment='summary pk')
+    v_id = models.IntegerField(
                                db_comment='Visitor ID. ')  # The composite primary key (v_id, v_date) found, that is not supported. The first column is selected.
     v_date = models.DateField(db_comment='Visiting date. ')
     amount = models.IntegerField(db_comment='amount.')
@@ -43,4 +44,4 @@ class JlsSummary(models.Model):
 
     class Meta:
         db_table = 'jls_summary'
-        unique_together = (('v_id', 'v_date'),)
+#         # unique_together = (('v_id', 'v_date', 'source_id'),)
