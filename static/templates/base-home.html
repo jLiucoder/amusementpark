@@ -6,12 +6,14 @@
       
     body {
         margin: 0px;
+        background-image: url('../../../static/img/background.jpg');
+        background-size: 1800px 960px;
     }
     
     .nav {
         height: 55px;
         width: 100%;
-        background-color: #002D62;
+        background-color: transparent;
         position: relative;
         font-family: 'segoe ui';
     }
@@ -132,7 +134,7 @@
     
     <div class="nav-links">
 
-        {% comment %} if authenticated, show all the elements, else show login and signup {% endcomment %}
+{#        if authenticated, show all the elements, else show login and signup#}
         {% if user.is_authenticated %}
             {% comment %} <a href={% url 'home' %}>HomePage</a> {% endcomment %}
             <a href={% url 'attractions' %}>Attractions</a>

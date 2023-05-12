@@ -1,29 +1,83 @@
 
-{% extends "base.html" %}
-
+{% extends "base-home.html" %}
 {% block content %}
 
-<body style="background-image: url('../../../static/img/background.jpg'); background-size: 1800px 960px; color: gray;">
+<style>
+    body {
+        font-family: "Oswald", sans-serif;
+        font-smoothing: antialiased;
+        {% comment %} background-image: url('../../../static/img/background.jpg');
+        background-size: 1800px 960px; {% endcomment %}
+    }
+    .center {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 50%;
+    }
+    .welcome {
+        line-height: .95;
+        color: #ffffff;
+        font-weight: 900;
+        font-size: 200px;
+        text-transform: uppercase;
+    }
+    .welcome > h2 {
+        text-transform: none;
+    }
+    .time {
+        font-size: 25px;
+        font-weight: 100;
+        text-transform: none;
+        letter-spacing: .10em;
+    }
+    .btn {
+        margin: 0 auto;
+        width: 170px;
+        height: 60px;
+        padding: 6px 0 0 3px;
+        border: 2px solid #ffff66;
+        border-radius: 2px;
+        background: none;
+        font-size: 14px;
+        color: #fff;
+        letter-spacing: .25em;
+        text-decoration: none;
+        font-weight: 600;
+        text-transform: uppercase;
+        vertical-align: middle;
+        text-align: center;
+        appearance: none;
+        transition: background .4s, color .4s;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background: #ffff66;
+        color: #10151B;
+    }
+</style>
 
-    {% if not user.is_authenticated%}
-    <h1 class="display-1" >welcome to the park! newcomer!</h1>
-        <h2>Signup or signin to continue</h2>
-    {% else %}
-    <h1 class="display-1" >welcome to the park! {{ user }}!</h1>
-    <p class="display-6">today is {{ today }}</p>
-     <div>
-{#        insert links here for membership page and group page#}
-        <a href="{% url 'memberships' %}" class="btn btn-primary">Membership</a>
-        <a href="{% url 'groups' %}" class="btn btn-primary">Here with a group?</a>
+<body>
+    <div class="center">
+        <div class="welcome">
+        {% if not user.is_authenticated%}
+            <h1>Welcome to the park! Newcomer!</h1>
+            <h2>Signup or signin to continue</h2>
+
+        {% else %}
+            <h1>Welcome to the park! {{ user }}!</h1>
+            <p class="time">{{ today }}</p>
+        </div>
+        <div class="buttons">
+            {% comment %} insert links here for membership page and group page {% endcomment %}
+            <a href="{% url 'memberships' %}" class="btn">Membership</a>
+            <a href="{% url 'groups' %}" class="btn">Here with a group?</a>
+        </div>
+        {% endif %}
     </div>
-
-
-    {% endif %}
-
-
-
-
-
 </body>
 
 {% endblock %}

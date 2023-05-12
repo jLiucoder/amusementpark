@@ -1,10 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'base-home.html' %}
 
 {% block content %}
+<style>
+    .signin {
+        color: #ffffff;
+        font-family: monospace, monospace;
+    }
+    .btn {
+        border: 2px solid #ffff66;
+        border-radius: 2px;
+        background: none;
+        font-size: 14px;
+        color: #fff;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
 
-    <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="btn btn-secondary"/>
-    </form>
+    <div class="signin">
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn"/>
+        </form>
+    </div>
 
 {% endblock %}
