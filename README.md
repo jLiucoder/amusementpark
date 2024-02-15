@@ -10,6 +10,9 @@ into a usable web application. Through this project, the team gained valuable ex
 communication, project management, and technical skills. This repository contains the complete source code 
 of the web application, which can be used as a reference or a starting point for future database system projects.
 
+## DB Schema
+<img width="1642" alt="image" src="https://github.com/jLiucoder/amusementpark/assets/55926282/6d638529-a582-4549-8a04-c3d1c4fb4923">
+
 ## Django apps included:
 * DBFinalProject: this is where all the main config files are at, such as database connections and apps in Django app
 * home: it has all the main pages of the web app, handles tempaltes, views, signin/singout, register logics
